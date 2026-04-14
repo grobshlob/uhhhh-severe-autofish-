@@ -54,14 +54,18 @@ local function getthebob()
     for _, v in pairs(ws:GetChildren()) do
         if v:IsA("Part") and v:FindFirstChild("RopeConstraint") then
             local rpos = root.Position
-            bpos = v.Position
-            local distance = getDistance(rpos, bpos)
-            if distance < radius then
-                return true
-            end
-        end
-    end
-    return false
+            local ok, bpos = pcall(function()
+				return v.Position
+			end)
+			if ok and bpos then
+            	local distance = getDistance(rpos, bpos)
+            	if distance < radius then
+                	return true
+            	end
+        	end
+    	end
+    	return false
+	end
 end
 
 task.spawn(function()
