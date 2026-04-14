@@ -1,5 +1,5 @@
 send_notification("dont move once u execute", "warning")
-print("HI i updated11")
+print("HI i updated12")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -90,7 +90,7 @@ task.spawn(function()
                     print("QTE pressed:", clean)
                     if ogpos ~= nil then
 						local distance2 = getDistance(root.Positon, ogpos)
-						if distance2 > 2
+						if distance2 > 2 then
 	                    	print("HI3")
 	                    	task.wait(2)
 	                    	root.CFrame = CFrame.new(ogpos)
