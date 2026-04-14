@@ -1,5 +1,5 @@
 send_notification("dont move once u execute", "warning")
-print("HI i updated10")
+print("HI i updated11")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -102,6 +102,7 @@ task.spawn(function()
 	                    	keypress(0x45)
 	                    	task.wait(2.5)
 	                    	keyrelease(0x45)
+						end
                     else 
                     	task.wait(1)
                     	mouse1click()
