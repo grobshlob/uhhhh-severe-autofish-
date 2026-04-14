@@ -141,4 +141,4 @@ task.spawn(function()
 end)
 
 
-send_notification("fishing bot running", "info")
+send_notification("fishing bot running, hold out ur fishing rod and once u cast it will start", "info")
