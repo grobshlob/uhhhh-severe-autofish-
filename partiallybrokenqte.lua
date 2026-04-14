@@ -1,5 +1,5 @@
 send_notification("dont move once u execute", "warning")
-print("HI i updated15")
+print("HI i updated16")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -11,39 +11,11 @@ local radius = 40
 local bpos = nil
 local ogpos = nil
 
-
 local container = lp.PlayerGui.MashingSystem.Container
 local qteLabel = container.Circle.KeyLabel
 
-
 local function getDistance(a, b)
     return math.sqrt((a.X - b.X)^2 + (a.Y - b.Y)^2 + (a.Z - b.Z)^2)
-end
-
-local function holde()
-	print("HI4")
-	local chest = ws.Chests.ChestBox
-	for _, v in pairs(chest:GetChildren()) do
-		if v:IsA("MeshPart") and v.Name == "Main" then
-			local part67 = v
-			local ppos = part67.Position
-			print(ppos)
-			local dista = getDistance(root.Position, part67.Position)
-			print(dista)
-			if dista <=100 then
-				print("HI5")
-				for i = 1, 5 do
-					root.CFrame = CFrame.new(ppos.X, ppos.Y, ppos.Z)
-					task.wait(0.2)
-				end
-				print("HI1")
-				keypress(0x45)
-				task.wait(2.5)
-				keyrelease(0x45)
-				break
-			end
-		end
-	end
 end
 
 local function getthebob()
@@ -112,7 +84,6 @@ task.spawn(function()
         end)
     end
 end)
-
 local radius2 = 1
 local function watersplash()
     if getthebob() then
@@ -147,13 +118,10 @@ local function watersplash()
         end
     end
 end
-
 task.spawn(function()
     while true do
         task.wait(0.2)
         if getthebob() then watersplash() end
     end
 end)
-
-
 send_notification("fishing bot running, hold out ur fishing rod and once u cast it will start", "info")
