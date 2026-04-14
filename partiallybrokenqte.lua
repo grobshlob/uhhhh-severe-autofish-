@@ -1,5 +1,5 @@
 send_notification("dont move once u execute", "warning")
-print("HI i updated7")
+print("HI i updated8")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -54,18 +54,19 @@ local function getthebob()
     for _, v in pairs(ws:GetChildren()) do
         if v:IsA("Part") and v:FindFirstChild("RopeConstraint") then
             local rpos = root.Position
-            local ok, bpos = pcall(function()
+            local ok, cpos = pcall(function()
 				return v.Position
 			end)
-			if ok and bpos then
+			if ok and cpos then
+				bpos = cpos
             	local distance = getDistance(rpos, bpos)
             	if distance < radius then
                 	return true
             	end
         	end
     	end
-    	return false
 	end
+	return false
 end
 
 task.spawn(function()
