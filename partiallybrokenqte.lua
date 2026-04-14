@@ -13,6 +13,7 @@ local ogpos = nil
 local container = lp.PlayerGui.MashingSystem.Container
 local qteLabel = container.Circle.KeyLabel
 
+
 local function getDistance(a, b)
     return math.sqrt((a.X - b.X)^2 + (a.Y - b.Y)^2 + (a.Z - b.Z)^2)
 end
@@ -95,7 +96,7 @@ task.spawn(function()
                     	task.wait(2.5)
                     	keyrelease(0x45)
                     else 
-                    task.wait(1)
+                    	task.wait(.9)
                     	mouse1click()
                     end
                 end
@@ -110,17 +111,22 @@ local function watersplash()
         getthebob()
         for _, b in pairs(ws:GetChildren()) do
             if b:IsA("Part") and b:FindFirstChild("RippleWater") then
-                local wpos = b.Position
+                local ok, wpos = pcall(function()
+					return b.Position
+				end)
 				if not wpos or wpos == nil then mouse1click() end
-                local dist = getDistance(wpos, bpos)
-                if dist <= radius2 then
-                	print("HI2")
-                    mouse1press()
-                    task.wait(0.2)
-                    mouse1release()
-                    task.wait(1)
-                    mouse1click()
-                end
+                if ok and wpos then
+					local dist = getDistance(wpos, bpos)
+					if dist <= radius2 then
+	                	print("HI2")
+	                    mouse1press()
+	                    task.wait(0.2)
+	                    mouse1release()
+	                    task.wait(1)
+	                    mouse1click()
+                	end
+				else mouseclick1()
+				end
             end
         end
     end
