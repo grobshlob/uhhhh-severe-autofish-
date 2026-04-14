@@ -7,7 +7,7 @@ local ws = game:GetService("Workspace")
 local lp = player.LocalPlayer
 local char = lp.Character
 local root = char:FindFirstChild("HumanoidRootPart")
-local radius = 15
+local radius = 40
 local bpos = nil
 local ogpos = nil
 
