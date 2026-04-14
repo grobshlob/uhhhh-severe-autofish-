@@ -111,13 +111,13 @@ task.spawn(function()
     end
 end)
 
-local radius2 = .5
+local radius2 = 1
 local function watersplash()
     if getthebob() then
-        getthebob()
-        for _, b in pairs(ws:GetChildren()) do
-            if b:IsA("Part") and b:FindFirstChild("RippleWater") then
-                local ok, wpos = pcall(function()
+    	getthebob()
+    	for _, b in pairs(ws:GetChildren()) do
+        	if b:IsA("Part") and b:FindFirstChild("RippleWater") then
+            	local ok, wpos = pcall(function()
 					return b.Position
 				end)
 				print("HI8")
@@ -129,7 +129,7 @@ local function watersplash()
 					if dist <= radius2 then
 	                	print("HI2")
 						task.wait(0.075)
-	                    mouse1press()
+	                	mouse1press()
 	                    task.wait(0.3)
 	                    mouse1release()
 	                    task.wait(1)
@@ -138,6 +138,7 @@ local function watersplash()
 						mouse1release()
                 	end
 				else
+					print("HI9")
 					mouse1press()
 					task.wait(0.3)
 					mouse1release()
