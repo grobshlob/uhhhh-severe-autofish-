@@ -75,7 +75,7 @@ task.spawn(function()
                     return qteLabel.Text
                 end)
                 if ok2 and text and text ~= "" then
-                   getthebob()
+                    getthebob()
                     local clean = text:gsub("%s", ""):upper()
                     local keycode = string.byte(clean)
                     keypress(keycode)
