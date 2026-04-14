@@ -1,5 +1,5 @@
 send_notification("dont move once u execute", "warning")
-print("HI i updated12")
+print("HI i updated13")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -89,7 +89,7 @@ task.spawn(function()
                     keyrelease(keycode)
                     print("QTE pressed:", clean)
                     if ogpos ~= nil then
-						local distance2 = getDistance(root.Positon, ogpos)
+						local distance2 = getDistance(root.Position, ogpos)
 						if distance2 > 2 then
 	                    	print("HI3")
 	                    	task.wait(2)
