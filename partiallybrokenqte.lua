@@ -1,5 +1,5 @@
 send_notification("dont move once u execute", "warning")
-print("HI i updated14")
+print("HI i updated15")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -138,6 +138,7 @@ local function watersplash()
                 	end
 				else
 					print("HI9")
+					task.wait(1)
 					mouse1press()
 					task.wait(0.3)
 					mouse1release()
