@@ -90,8 +90,6 @@ task.spawn(function()
                     print("QTE pressed:", clean)
                     if root.Position ~= ogpos and ogpos ~= nil then
                     	print("HI3")
-                    	task.wait(2.5)
-                    	holde()
                     	task.wait(1)
                     	root.CFrame = CFrame.new(ogpos)
                     	task.wait(1)
