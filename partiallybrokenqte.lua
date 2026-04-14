@@ -1,3 +1,4 @@
+send_notification("dont move once u execute", "warning")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -139,4 +140,4 @@ task.spawn(function()
     end
 end)
 
-print("fishing bot running")
+send_notification("fishing bot running", "info")
