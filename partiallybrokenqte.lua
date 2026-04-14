@@ -120,7 +120,8 @@ local function watersplash()
                 local ok, wpos = pcall(function()
 					return b.Position
 				end)
-				if not wpos or wpos == nil then mouse1click() end
+				print("HI8")
+				if not wpos or wpos == nil then return end
 				print("HI6")
                 if ok and wpos then
 					print("HI7")
