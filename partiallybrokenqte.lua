@@ -111,7 +111,7 @@ local function watersplash()
         for _, b in pairs(ws:GetChildren()) do
             if b:IsA("Part") and b:FindFirstChild("RippleWater") then
                 local wpos = b.Position
-				if not wpos then mouse1click()
+				if not wpos or wpos == nil then mouse1click()
                 local dist = getDistance(wpos, bpos)
                 if dist <= radius2 then
                 	print("HI2")
