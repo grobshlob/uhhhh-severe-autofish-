@@ -1,5 +1,5 @@
 send_notification("dont move once u execute", "warning")
-print("HI i updated8")
+print("HI i updated9")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -121,11 +121,8 @@ local function watersplash()
             	local ok, wpos = pcall(function()
 					return b.Position
 				end)
-				print("HI8")
 				if not wpos or wpos == nil then return end
-				print("HI6")
                 if ok and wpos then
-					print("HI7")
 					local dist = getDistance(wpos, bpos)
 					if dist <= radius2 then
 	                	print("HI2")
