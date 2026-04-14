@@ -107,7 +107,7 @@ task.spawn(function()
     end
 end)
 
-local radius2 = .75
+local radius2 = .5
 local function watersplash()
     if getthebob() then
         getthebob()
@@ -121,13 +121,19 @@ local function watersplash()
 					local dist = getDistance(wpos, bpos)
 					if dist <= radius2 then
 	                	print("HI2")
+						task.wait(0.075)
 	                    mouse1press()
-	                    task.wait(0.2)
+	                    task.wait(0.3)
 	                    mouse1release()
 	                    task.wait(1)
-	                    mouse1click()
+	                    mouse1press()
+						task.wait(0.05)
+						mouse1release()
                 	end
-				else mouseclick1()
+				else
+					mouse1press()
+					task.wait(0.3)
+					mouse1release()
 				end
             end
         end
