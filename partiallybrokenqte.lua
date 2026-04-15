@@ -147,13 +147,13 @@ local function watersplash()
 					local dist = getDistance(wpos, bpos)
 					if dist <= radius2 then
 	                	print("HI2")
-						task.wait(0.075)
+						task.wait(.5)
 	                	mouse1press()
 	                    task.wait(0.3)
 	                    mouse1release()
 	                    task.wait(1)
 	                    mouse1press()
-						task.wait(0.05)
+						task.wait(0.5)
 						mouse1release()
 						task.spawn(function()
 							task.wait(1.5)
@@ -161,7 +161,6 @@ local function watersplash()
 								resetfish()
 							end
 						end)
-
                 	end
 				end
             end
