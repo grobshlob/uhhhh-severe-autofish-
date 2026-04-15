@@ -1,5 +1,5 @@
-send_notification("dont move once u execute: 27", "warning")
-print("HI i updated27")
+send_notification("dont move once u execute: 28", "warning")
+print("HI i updated28")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -19,34 +19,41 @@ local function getDistance(a, b)
 end
 
 local function spookedfishcheck()
-	local gui = game.Players.lp.PlayerGui.NotifierGui.MessageContainer
+	local gui = game.Players.LocalPlayer.PlayerGui.NotifierGui.MessageContainer
 	local ok, noti = pcall(function()
 		gui:FindFirstChild("Notification")
 	end)
 	if ok and noti then
 		local text = noti.Text
 		if text == "The fish here are spooked. Move to a new spot!" then
-			keypress(0x20)
-			task.wait(0.1)
-			keypress(0x53)
-			task.wait(3)
-			keyrelease(0x53)
-			task.wait(0.1)
-			keypress(0x57)
-			task.wait(3)
-			keyrelease(0x57)
-			task.wait(0.1)
-			keypress(0x41)
-			task.wait(3)
-			keyrelease(0x41)
-			task.wait(0.1)
-			keypress(0x44)
-			task.wait(3)
-			keyrelease(0x44)
-			root.CFrame = CFrame.new(ogpos)
-			task.wait(1)
-			mouse1click()
+			return true
+		else return false
 		end
+	end
+end
+
+local function resetfish()
+	if spookedfishcheck() then
+		keypress(0x20)
+		task.wait(0.1)
+		keypress(0x53)
+		task.wait(3)
+		keyrelease(0x53)
+		task.wait(0.1)
+		keypress(0x57)
+		task.wait(3)
+		keyrelease(0x57)
+		task.wait(0.1)
+		keypress(0x41)
+		task.wait(3)
+		keyrelease(0x41)
+		task.wait(0.1)
+		keypress(0x44)
+		task.wait(3)
+		keyrelease(0x44)
+		root.CFrame = CFrame.new(ogpos)
+		task.wait(1)
+		mouse1click()
 	end
 end
 
@@ -67,7 +74,13 @@ local function getthebob()
             	if distance < radius then
                 	return true
             	end
-			else spookedfishcheck()
+			else
+				if spookedfishcheck() then 
+					resetfish()
+				else
+					task.wait(1)
+					mouse1click()
+				end
 			end
 		end
 	end
