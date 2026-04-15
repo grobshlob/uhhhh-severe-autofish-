@@ -1,4 +1,4 @@
-send_notification("dont move once u execute: 25", "warning")
+send_notification("dont move once u execute: 26", "warning")
 print("HI i updated25?")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
@@ -147,6 +147,7 @@ task.spawn(function()
     while true do
         task.wait(0.2)
         if getthebob() then watersplash() end
+		spookedfishcheck()
     end
 end)
 send_notification("fishing bot running,", "info")
