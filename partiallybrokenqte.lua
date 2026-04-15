@@ -157,7 +157,7 @@ local function watersplash()
 						task.wait(0.05)
 						mouse1release()
 						task.wait(2)
-						if spookedfish() then resetfish() end
+						if spookedfishcheck() then resetfish() end
                 	end
 				end
             end
