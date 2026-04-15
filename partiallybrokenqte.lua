@@ -1,5 +1,5 @@
-send_notification("dont move once u execute: 34", "warning")
-print("HI i updated34")
+send_notification("dont move once u execute: 35", "warning")
+print("HI i updated35")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -31,7 +31,6 @@ local function spookedfishcheck()
 		else return false
 		end
 	end
-	task.wait(0.01)
 end
 
 local function resetfish()
@@ -156,8 +155,13 @@ local function watersplash()
 	                    mouse1press()
 						task.wait(0.05)
 						mouse1release()
-						task.wait(2)
-						if spookedfishcheck() then resetfish() end
+						task.spawn(function()
+							task.wait(1.5)
+							if spookedfishcheck() then 
+								resetfish()
+							end
+						end)
+
                 	end
 				end
             end
