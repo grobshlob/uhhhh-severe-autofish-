@@ -1,5 +1,5 @@
-send_notification("dont move once u execute: 33", "warning")
-print("HI i updated33")
+send_notification("dont move once u execute: 34", "warning")
+print("HI i updated34")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -23,10 +23,6 @@ local function spookedfishcheck()
 	local ok, noti = pcall(function()
 		gui:FindFirstChild("Notification")
 	end)
-	repeat 
-    	task.wait(0.1) 
-    	local _, currentVis = pcall(function() return gui.Visible end)
-	until currentVis == true
 	if ok and noti then
 		local text = noti.Text
 		print("FOUND")
@@ -39,16 +35,21 @@ local function spookedfishcheck()
 end
 
 local function resetfish()
-	local rpos = root.Position
+	local char = lp.Character
+    local croot = char and char:FindFirstChild("HumanoidRootPart")
+    if not croot then return end
+	local rpos = croot.Position
 	keypress(0x51)
 	task.wait(0.25)
-	root.CFrame = CFrame.new(rpos.X + 100, rpos.y + 10, rpos.Z + 100)
+	croot.CFrame = CFrame.new(rpos.X + 100, rpos.y + 10, rpos.Z + 100)
 	task.wait(5)
 	keyrelease(0x51)
 	task.wait(0.5)
 	keypress(0x51)
 	task.wait(0.25)
-	root.CFrame = CFrame.new(ogpos)
+	if ogpos then
+		croot.CFrame = CFrame.new(ogpos)
+	end
 	task.wait(0.5)
 	keyrelease(0x51)
 	task.wait(1)
@@ -143,7 +144,6 @@ local function watersplash()
             	local ok, wpos = pcall(function()
 					return b.Position
 				end)
-				if not wpos or wpos == nil then print("CLICKING") mouse1click() end
                 if ok and wpos then
 					local dist = getDistance(wpos, bpos)
 					if dist <= radius2 then
