@@ -74,13 +74,6 @@ local function getthebob()
             	if distance < radius then
                 	return true
             	end
-			else
-				if spookedfishcheck() then 
-					resetfish()
-				else
-					task.wait(1)
-					mouse1click()
-				end
 			end
 		end
 	end
@@ -153,6 +146,9 @@ local function watersplash()
 	                    mouse1press()
 						task.wait(0.05)
 						mouse1release()
+						if spookedfishcheck() then
+							resetfish()
+						end
                 	end
 				end
             end
