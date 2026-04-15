@@ -23,6 +23,10 @@ local function spookedfishcheck()
 	local ok, noti = pcall(function()
 		gui:FindFirstChild("Notification")
 	end)
+	repeat 
+    	task.wait(0.1) 
+    	local _, currentVis = pcall(function() return gui.Visible end)
+	until currentVis == true
 	if ok and noti then
 		local text = noti.Text
 		print("FOUND")
