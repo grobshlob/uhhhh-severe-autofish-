@@ -156,6 +156,8 @@ local function watersplash()
 	                    mouse1press()
 						task.wait(0.05)
 						mouse1release()
+						task.wait(2)
+						if spookedfish() then resetfish() end
                 	end
 				end
             end
@@ -166,7 +168,6 @@ task.spawn(function()
     while true do
         task.wait(0.2)
         if getthebob() then watersplash() end
-		if spookedfishcheck() then resetfish() end
     end
 end)
 send_notification("fishing bot running,", "info")
