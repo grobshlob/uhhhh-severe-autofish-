@@ -1,5 +1,5 @@
-send_notification("dont move once u execute: 26", "warning")
-print("HI i updated26?")
+send_notification("dont move once u execute: 27", "warning")
+print("HI i updated27")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -18,6 +18,38 @@ local function getDistance(a, b)
     return math.sqrt((a.X - b.X)^2 + (a.Y - b.Y)^2 + (a.Z - b.Z)^2)
 end
 
+local function spookedfishcheck()
+	local gui = game.Players.lp.PlayerGui.NotifierGui.MessageContainer
+	local ok, noti = pcall(function()
+		gui:FindFirstChild("Notification")
+	end)
+	if ok and noti then
+		local text = noti.Text
+		if text == "The fish here are spooked. Move to a new spot!" then
+			keypress(0x20)
+			task.wait(0.1)
+			keypress(0x53)
+			task.wait(3)
+			keyrelease(0x53)
+			task.wait(0.1)
+			keypress(0x57)
+			task.wait(3)
+			keyrelease(0x57)
+			task.wait(0.1)
+			keypress(0x41)
+			task.wait(3)
+			keyrelease(0x41)
+			task.wait(0.1)
+			keypress(0x44)
+			task.wait(3)
+			keyrelease(0x44)
+			root.CFrame = CFrame.new(ogpos)
+			task.wait(1)
+			mouse1click()
+		end
+	end
+end
+
 local function getthebob()
     if ogpos == nil then
         ogpos = root.Position
@@ -29,15 +61,15 @@ local function getthebob()
             local ok, cpos = pcall(function()
 				return v.Position
 			end)
-			if not ok and not cpos then mouse1click() end
 			if ok and cpos then
 				bpos = cpos
             	local distance = getDistance(rpos, bpos)
             	if distance < radius then
                 	return true
             	end
-        	end
-    	end
+			else spookedfishcheck()
+			end
+		end
 	end
 	return false
 end
@@ -114,40 +146,10 @@ local function watersplash()
         end
     end
 end
-local function spookedfishcheck()
-	local gui = game.Players.lp.PlayerGui.NotifierGui.MessageContainer
-	local ok, noti = pcall(function()
-		gui:FindFirstChild("Notification")
-	end)
-	if ok and noti then
-		local text = noti.Text
-		if text == "The fish here are spooked. Move to a new spot!" then
-			keypress(0x20)
-			task.wait(0.1)
-			keypress(0x53)
-			task.wait(3)
-			keyrelease(0x53)
-			task.wait(0.1)
-			keypress(0x57)
-			task.wait(3)
-			keyrelease(0x57)
-			task.wait(0.1)
-			keypress(0x41)
-			task.wait(3)
-			keyrelease(0x41)
-			task.wait(0.1)
-			keypress(0x44)
-			task.wait(3)
-			keyrelease(0x44)
-			root.CFrame = CFrame.new(ogpos)
-		end
-	end
-end
 task.spawn(function()
     while true do
         task.wait(0.2)
         if getthebob() then watersplash() end
-		spookedfishcheck()
     end
 end)
 send_notification("fishing bot running,", "info")
