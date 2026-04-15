@@ -19,7 +19,6 @@ local function getDistance(a, b)
 end
 
 local function spookedfishcheck()
-	print("chec")
 	local gui = game.Players.LocalPlayer.PlayerGui.NotifierGui.MessageContainer
 	local ok, noti = pcall(function()
 		gui:FindFirstChild("Notification")
@@ -32,7 +31,7 @@ local function spookedfishcheck()
 		else return false
 		end
 	end
-	task.wait(1)
+	task.wait(0.01)
 end
 
 local function resetfish()
