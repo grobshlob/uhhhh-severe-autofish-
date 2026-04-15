@@ -32,6 +32,7 @@ local function spookedfishcheck()
 		else return false
 		end
 	end
+	task.wait(1)
 end
 
 local function resetfish()
