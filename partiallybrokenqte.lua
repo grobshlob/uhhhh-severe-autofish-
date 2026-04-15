@@ -1,5 +1,5 @@
 send_notification("dont move once u execute: 28", "warning")
-print("HI i updated28")
+print("HI i updated28..")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
