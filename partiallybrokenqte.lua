@@ -1,4 +1,4 @@
-send_notification("dont move once u execute: 36.5", "warning")
+send_notification("dont move once u execute: 36.6", "warning")
 print("HI i updated36")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
@@ -77,7 +77,7 @@ local function getthebob()
 			if ok and cpos then
 				bpos = cpos
             	local distance = getDistance(rpos, bpos)
-				task.wait(1)
+				task.wait(0.3)
             	if distance < radius then
                 	return true
 				else return false
@@ -179,7 +179,7 @@ local function watersplash()
 end
 task.spawn(function()
     while true do
-        task.wait(0.5)
+        task.wait(0.2)
         if getthebob() then watersplash() end
         if isleftpressed() or isleftclicked() then 
         	if spookedfishcheck() then
