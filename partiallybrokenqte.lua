@@ -24,6 +24,7 @@ local function spookedfishcheck()
 	local gui = game.Players.LocalPlayer.PlayerGui.NotifierGui.MessageContainer
 	local noti = gui:FindFirstChild("Notification")
 	if not noti then return end
+	print("hi")
 	if noti then
 		print("yoo")
 		local text = noti.Text
@@ -167,13 +168,11 @@ local function watersplash()
 	                    task.wait(.5)
 						mouse1click()
 						print("YO6")
-						task.spawn(function()
-							task.wait(1.5)
-							print("YO7--negligible")
-							if spookedfishcheck() then 
-								resetfish()
-							end
-						end)
+        				if isleftpressed() or isleftclicked() then 
+        					if spookedfishcheck() then
+        						resetfish()
+        					end
+        				end
                 	end
 				
 				end
@@ -192,6 +191,8 @@ task.spawn(function()
         end
     end
 end)
+
+
 send_notification("fishing bot running,", "info")
 task.wait(1)
 local rpos = root.Position
