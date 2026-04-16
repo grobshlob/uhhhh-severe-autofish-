@@ -20,7 +20,8 @@ end
 
 local function spookedfishcheck()
 	local gui = game.Players.LocalPlayer.PlayerGui.NotifierGui.MessageContainer
-	local noti = gui:WaitForChild("Notification", 2)
+	local noti = gui:FindFirstChild("Notification")
+	if not noti then return end
 	if noti then
 		print("yoo")
 		local text = noti.Text
