@@ -1,5 +1,5 @@
-send_notification("dont move once u execute: 36.2", "warning")
-print("HI i updated36.2")
+send_notification("dont move once u execute: 36.3", "warning")
+print("HI i updated36")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -77,11 +77,11 @@ local function getthebob()
             	local distance = getDistance(rpos, bpos)
             	if distance < radius then
                 	return true
-            	end
+				else return false
+				end
 			end
 		end
 	end
-	return false
 end
 
 local reset = false
