@@ -1,5 +1,5 @@
-send_notification("dont move once u execute: 36", "warning")
-print("HI i updated36")
+send_notification("dont move once u execute: 35", "warning")
+print("HI i updated35")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -39,13 +39,15 @@ local function resetfish()
 	local rpos = croot.Position
 	keypress(0x51)
 	task.wait(0.25)
-	croot.CFrame = CFrame.new(rpos.X + 100, rpos.y + 10, rpos.Z + 100)
+	croot.CFrame = CFrame.new(rpos.X + 100, rpos.y, rpos.Z + 100)
 	task.wait(5)
 	keyrelease(0x51)
 	task.wait(0.5)
 	keypress(0x51)
 	task.wait(0.25)
 	if ogpos then
+		croot.CFrame = CFrame.new(ogpos)
+		task.wait(1)
 		croot.CFrame = CFrame.new(ogpos)
 	end
 	task.wait(0.5)
