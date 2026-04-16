@@ -1,5 +1,5 @@
-send_notification("dont move once u execute: 35", "warning")
-print("HI i updated35")
+send_notification("dont move once u execute: 36", "warning")
+print("HI i updated36")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -78,11 +78,6 @@ local function getthebob()
                 	return true
             	end
 			end
-		if not v:FindFirstChild("RopeConstraint") then
-			task.wait(0.5)
-			print("rope returned nil")
-			mouse1click() 
-		end
 		end
 	end
 	return false
@@ -173,11 +168,6 @@ local function watersplash()
 							end
 						end)
                 	end
-				if not ok and not wpos then
-					print("castingback")
-	            	task.wait(1)
-					mouse1click()
-				end
 				end
 			end
         end
@@ -185,13 +175,11 @@ local function watersplash()
 end
 task.spawn(function()
     while true do
-        task.wait(0.2)
+        task.wait(0.5)
         if getthebob() then watersplash() end
         if isleftpressed() or isleftclicked() then 
         	if spookedfishcheck() then
         		resetfish()
-        	else
-        		if not getthebob() then mouse1click() end
         	end
         end
     end
