@@ -1,4 +1,4 @@
-send_notification("dont move once u execute: 36.4", "warning")
+send_notification("dont move once u execute: 36.5", "warning")
 print("HI i updated36")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
@@ -18,7 +18,9 @@ local function getDistance(a, b)
     return math.sqrt((a.X - b.X)^2 + (a.Y - b.Y)^2 + (a.Z - b.Z)^2)
 end
 
+
 local function spookedfishcheck()
+	local found = false
 	local gui = game.Players.LocalPlayer.PlayerGui.NotifierGui.MessageContainer
 	local noti = gui:FindFirstChild("Notification")
 	if not noti then return end
@@ -27,10 +29,10 @@ local function spookedfishcheck()
 		local text = noti.Text
 		print("FOUND")
 		if text == "The fish here are spooked. Move to a new spot!" then
-			return true
-		else return false
+			found = true
 		end
 	end
+	return found
 end
 
 local function resetfish()
