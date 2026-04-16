@@ -1,5 +1,5 @@
-send_notification("dont move once u execute: 36.6", "warning")
-print("HI i updated36")
+send_notification("dont move once u execute: 37", "warning")
+print("HI i updated37")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -8,7 +8,7 @@ local lp = player.LocalPlayer
 local char = lp.Character
 local root = char:FindFirstChild("HumanoidRootPart")
 local radius = 40
-local bpos = nil
+local vpos = nil
 local ogpos = nil
 
 local container = lp.PlayerGui.MashingSystem.Container
@@ -71,18 +71,20 @@ local function getthebob()
     end
     for _, v in pairs(ws:GetChildren()) do
         if v:IsA("Part") and v:FindFirstChild("RopeConstraint") then
-            local rpos = root.Position
-            local ok, cpos = pcall(function()
+			local ok, currentpos = pcall(function()
 				return v.Position
 			end)
-			if ok and cpos then
-				bpos = cpos
-            	local distance = getDistance(rpos, bpos)
-            	if distance < radius then
-                	found = true
+			if ok and currentpos then
+				local dist = getDistance(currentpos, ogpos)
+				if dist < radius then
+					hi = currentpos
+					found = true
 				end
 			end
 		end
+	end
+	if found then
+		vpos = hi
 	end
 	return found
 end
@@ -147,7 +149,7 @@ end)
 local radius2 = 1
 local function watersplash()
     if getthebob() then
-    	getthebob()
+		print(vpos)
     	for _, b in pairs(ws:GetChildren()) do
         	if b:IsA("Part") and b:FindFirstChild("RippleWater") then
             	local ok, wpos = pcall(function()
@@ -155,7 +157,7 @@ local function watersplash()
 				end)
 				print("YO5")
                 if ok and wpos then
-					local dist = getDistance(wpos, bpos)
+					local dist = getDistance(wpos, vpos)
 					if dist <= radius2 then
 	                	print("HI2")
 						task.wait(.25)
@@ -173,6 +175,7 @@ local function watersplash()
 							end
 						end)
                 	end
+				
 				end
 			end
         end
