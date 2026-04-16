@@ -1,5 +1,5 @@
-send_notification("dont move once u execute: 35", "warning")
-print("HI i updated35")
+send_notification("dont move once u execute: 36", "warning")
+print("HI i updated36")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -20,10 +20,9 @@ end
 
 local function spookedfishcheck()
 	local gui = game.Players.LocalPlayer.PlayerGui.NotifierGui.MessageContainer
-	local ok, noti = pcall(function()
-		gui:FindFirstChild("Notification")
-	end)
-	if ok and noti then
+	local noti = gui:WaitForChild("Notification", 2)
+	if noti then
+		print("yoo")
 		local text = noti.Text
 		print("FOUND")
 		if text == "The fish here are spooked. Move to a new spot!" then
@@ -73,6 +72,11 @@ local function getthebob()
                 	return true
             	end
 			end
+		if not v:FindFirstChild("RopeConstraint") then
+			task.wait(0.5)
+			print("rope returned nil")
+			mouse1click() 
+		end
 		end
 	end
 	return false
@@ -143,27 +147,33 @@ local function watersplash()
             	local ok, wpos = pcall(function()
 					return b.Position
 				end)
+				print("YO5")
                 if ok and wpos then
 					local dist = getDistance(wpos, bpos)
 					if dist <= radius2 then
 	                	print("HI2")
-						task.wait(.5)
+						task.wait(.25)
 	                	mouse1press()
-	                    task.wait(0.3)
+	                    task.wait(0.25)
 	                    mouse1release()
-	                    task.wait(1)
-	                    mouse1press()
-						task.wait(0.5)
-						mouse1release()
+	                    task.wait(.5)
+						mouse1click()
+						print("YO6")
 						task.spawn(function()
 							task.wait(1.5)
+							print("YO7--negligible")
 							if spookedfishcheck() then 
 								resetfish()
 							end
 						end)
                 	end
+				if not ok and not wpos then
+					print("castingback")
+	            	task.wait(1)
+					mouse1click()
 				end
-            end
+				end
+			end
         end
     end
 end
@@ -171,6 +181,13 @@ task.spawn(function()
     while true do
         task.wait(0.2)
         if getthebob() then watersplash() end
+        if isleftpressed() or isleftclicked() then 
+        	if spookedfishcheck() then
+        		resetfish()
+        	else
+        		if not getthebob() then mouse1click() end
+        	end
+        end
     end
 end)
 send_notification("fishing bot running,", "info")
