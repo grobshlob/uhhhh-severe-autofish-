@@ -1,4 +1,4 @@
-send_notification("dont move once u execute: 38.3", "warning")
+send_notification("dont move once u execute: 38.4", "warning")
 print("HI i updated38")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
