@@ -162,7 +162,7 @@ local function watersplash()
         end
     end
 end
-local time = 300
+local time = 500
 local lastkey = ""
 local running = true
 task.spawn(function()
@@ -197,8 +197,9 @@ task.spawn(function()
 						task.wait(1)
 						time = time - 1
 						if time == 0 then
-							time = 300
+							time = 500
 							resetfish()
+							task.wait(0.4)
 						end
 					end	
 				end)
