@@ -1,4 +1,4 @@
-send_notification("dont move once u execute: 38", "warning")
+send_notification("dont move once u execute: 38.1", "warning")
 print("HI i updated38")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
@@ -238,6 +238,7 @@ task.spawn(function()
 				send_notification("auto corpse part started, waiting for a corpse to spawn", "info")
 				task.spawn(function()
 					while toggle2 and running do
+						task.wait(1)
 						local root = char:FindFirstChild("HumanoidRootPart")
 						if not root then break end
 						for _, v in pairs(ws:GetChildren()) do
@@ -265,7 +266,6 @@ task.spawn(function()
 								end
 							end
 						end
-						task.wait(0.1)
 					end
 				end)
 			else
