@@ -1,5 +1,5 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
-
+--this will get you banned if u pick up a part
 local player = game:GetService("Players")
 local ws = game:GetService("Workspace")
 local lp = player.LocalPlayer
