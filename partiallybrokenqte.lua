@@ -1,4 +1,4 @@
-send_notification("dont move once u execute: 39", "warning")
+send_notification("version: 39.1", "warning")
 print("HI i updated39")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
@@ -184,6 +184,8 @@ task.spawn(function()
 			toggle = not toggle
 			if toggle then
 				send_notification("auto fish started, cast to begin", "info")
+				ogpos = root.Position
+				root.CFrame = CFrame.new(ogpos)
 				task.spawn(function()
 					while toggle do
 						task.wait(0.2)
@@ -212,6 +214,4 @@ end)
 
 send_notification("fishing bot running,", "info")
 task.wait(1)
-ogpos = root.Position
-root.CFrame = CFrame.new(ogpos)
 send_notification("toggle autofish: f1", "info")
