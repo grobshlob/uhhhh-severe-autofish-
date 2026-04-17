@@ -1,4 +1,4 @@
-send_notification("version: 39.1", "warning")
+send_notification("version: 39.2", "warning")
 print("HI i updated39")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
@@ -46,7 +46,9 @@ end
 
 
 local function resetfish()
-	reliabletp(Vector3.new(-6198.319336, 45.353798, -4826.008301))
+	local place = game.Workspace.Map.OldCactus.CactusModel.Cactuh
+	local placepos = place.Position
+	reliabletp(placepos)
 	task.wait(1)
 	keypress(0x57)
 	task.wait(4)
@@ -54,6 +56,12 @@ local function resetfish()
 	task.wait(0.5)
 	reliabletp(ogpos)
 	task.wait(1)
+		root = char:FindFirstChild("HumanoidRootPart")
+	if getDistance(root.Position, ogpos) < 20 then
+		reliabletp(ogpos)
+		task.wait(1)
+		mouse1click()
+	end
 	mouse1click()
 end
 
@@ -162,7 +170,7 @@ local function watersplash()
         end
     end
 end
-local time = 300
+local time = 900
 local lastkey = ""
 local running = true
 task.spawn(function()
@@ -193,11 +201,11 @@ task.spawn(function()
 					end
 				end)
 				task.spawn(function()
-					while true do
+					while toggle do
 						task.wait(1)
 						time = time - 1
 						if time == 0 then
-							time = 300
+							time = 900
 							resetfish()
 							task.wait(1)
 						end
