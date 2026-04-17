@@ -150,7 +150,6 @@ end)
 local radius2 = 1
 local function watersplash()
     if getthebob() then
-		print(vpos)
     	for _, b in pairs(ws:GetChildren()) do
         	if b:IsA("Part") and b:FindFirstChild("RippleWater") then
             	local ok, wpos = pcall(function()
@@ -166,13 +165,10 @@ local function watersplash()
 	                    task.wait(.5)
 						mouse1click()
 						task.wait(1)
-        				if isleftpressed() or isleftclicked() then 
-        					if spookedfishcheck() then
-        						resetfish()
-        					end
+        				if spookedfishcheck() then
+        					resetfish()
         				end
                 	end
-				
 				end
 			end
         end
