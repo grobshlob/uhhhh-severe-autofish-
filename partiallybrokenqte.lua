@@ -1,5 +1,5 @@
-send_notification("dont move once u execute: 38.4", "warning")
-print("HI i updated38")
+send_notification("dont move once u execute: 39", "warning")
+print("HI i updated39")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -12,7 +12,6 @@ local vpos = nil
 local ogpos = nil
 
 local toggle = false
-local toggle2 = false
 
 local container = lp.PlayerGui.MashingSystem.Container
 local qteLabel = container.Circle.KeyLabel
@@ -21,31 +20,6 @@ local function getDistance(a, b)
     return math.sqrt((a.X - b.X)^2 + (a.Y - b.Y)^2 + (a.Z - b.Z)^2)
 end
 
-local parts = {"SaintsRightArm", "SaintsRightLeg", "SaintsRibcage", "SaintsLeftArm", "SaintsLeftLeg", "SaintsHeart"}
-local checkedparts = {}
-
-
-local function textcheck()
-    local found2 = false
-    local ok, gui = pcall(function()
-        local notifier = lp.PlayerGui:FindFirstChild("NotifierGui")
-        if not notifier then return nil end
-        return notifier:FindFirstChild("MessageContainer")
-    end)
-    if ok and gui then
-        local noti2 = gui:FindFirstChild("Notification")
-        if not noti2 then return false end
-        print("hi")
-        local ok2, text = pcall(function() return noti2.Text end)
-        if ok2 and text then
-            print("FOUND A NOTI")
-            if text == "IT APPEARS ONCE AGAIN." then
-                found2 = true
-            end
-        end
-    end
-    return found2
-end
 
 local function reliabletp(target)
 	local root = char:FindFirstChild("HumanoidRootPart")
@@ -204,9 +178,6 @@ task.spawn(function()
 			if k == "F1" then
 				current = "F1"
 				break
-			elseif k == "F2" then
-				current = "F2"
-				break
 			end		
 		end	
 		if current == "F1" and lastkey ~= "F1" then
@@ -232,52 +203,6 @@ task.spawn(function()
 			else
 				send_notification("auto fish stopped", "info")
 			end
-		elseif current == "F2" and lastkey ~= "F2" then
-			toggle2 = not toggle2
-			running = true
-			if toggle2 then
-				send_notification("auto corpse part started, waiting for a corpse to spawn", "info")
-				task.spawn(function()
-					while toggle2 and running do
-						task.wait(1)
-						local root = char:FindFirstChild("HumanoidRootPart")
-						if not root then break end
-						for _, v in pairs(ws:GetChildren()) do
-							if v:IsA("BasePart") then
-								if table.find(parts, v.Name) then
-									local ok, cpos = pcall(function()
-										return v.Position
-									end)
-									if not ok or not cpos then continue end
-									local honeypos = math.floor(cpos.X) .. "," .. math.floor(cpos.Y) .. "," .. math.floor(cpos.Z)
-									if checkedparts[honeypos] then continue end
-									print("corpse part found " .. v.Name .. " checking if its a honeypot")
-									task.wait(.2)
-									if (cpos.Y >= 0 and cpos.Y <= 175) and textcheck() then
-										print("teleporting to " .. v.Name)
-										local ogpos = root.Position
-										reliabletp(cpos)
-										if getDistance(root.Position, cpos) < 20 then 
-											task.wait(0.1)
-											keypress(0x45)
-											task.wait(5)
-											keyrelease(0x45)
-											reliabletp(ogpos)
-											running = false
-											send_notification("turn on desync and RUNNNN", "warning")
-										end
-									else
-										print(v.Name .. " is a honeypot")
-										checkedparts[honeypos] = true
-									end
-								end
-							end
-						end
-					end
-				end)
-			else
-				send_notification("auto corpse part is off", "info")
-			end
 		end
 		lastkey = current
 	end
@@ -290,4 +215,3 @@ task.wait(1)
 ogpos = root.Position
 root.CFrame = CFrame.new(ogpos)
 send_notification("toggle autofish: f1", "info")
-send_notification("toggle autocast: f2", "info")
