@@ -245,15 +245,19 @@ task.spawn(function()
 						for _, v in pairs(ws:GetChildren()) do
 							if v:IsA("BasePart") then
 								if table.find(parts, v.Name) then
-									if checkedparts[v] then continue end
+									local ok, cpos = pcall(function()
+										return v.Position
+									end)
+									if not ok or not cpos then continue end
+									local honeypos = math.floor(cpos.X) .. "," .. math.floor(cpos.Y) .. "," .. math.floor(cpos.Z)
+									if checkedparts[honeypos] then continue end
 									print("corpse part found " .. v.Name .. " checking if its a honeypot")
-									local vpos = v.Position
 									task.wait(.2)
-									if (vpos.Y >= 0 and vpos.Y <= 175) and textcheck() then
+									if (cpos.Y >= 0 and cpos.Y <= 175) and textcheck() then
 										print("teleporting to " .. v.Name)
 										local ogpos = root.Position
-										reliabletp(vpos)
-										if getDistance(root.Position, vpos) < 20 then 
+										reliabletp(cpos)
+										if getDistance(root.Position, cpos) < 20 then 
 											task.wait(0.1)
 											keypress(0x45)
 											task.wait(5)
@@ -264,7 +268,7 @@ task.spawn(function()
 										end
 									else
 										print(v.Name .. " is a honeypot")
-										checkedparts[v] = true
+										checkedparts[honeypos] = true
 									end
 								end
 							end
