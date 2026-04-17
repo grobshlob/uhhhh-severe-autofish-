@@ -51,12 +51,13 @@ local function resetfish()
 	task.wait(5)
 	keyrelease(0x57)
 	task.wait(0.5)
-	keypress(0x51)
-	task.wait(0.25)
-	if ogpos then
-		croot.CFrame = CFrame.new(ogpos)
-		task.wait(1)
-		croot.CFrame = CFrame.new(ogpos)
+	for i = 1, 3 do
+		keypress(0x51)
+		task.wait(0.25)
+		if ogpos then
+			croot.CFrame = CFrame.new(ogpos)
+			task.wait(1)
+		end
 	end
 	task.wait(0.5)
 	keyrelease(0x51)
@@ -121,7 +122,6 @@ task.spawn(function()
 						if not char or char == nil then return end
 						local croot = char and char:FindFirstChild("HumanoidRootPart")
 						if croot then
-							print("HI67")
 							task.wait(3)
 							local rpos = croot.Position
 							local dist2 = getDistance(rpos, ogpos)
@@ -156,18 +156,16 @@ local function watersplash()
             	local ok, wpos = pcall(function()
 					return b.Position
 				end)
-				print("YO5")
                 if ok and wpos then
 					local dist = getDistance(wpos, vpos)
 					if dist <= radius2 then
-	                	print("HI2")
 						task.wait(.25)
 	                	mouse1press()
 	                    task.wait(0.25)
 	                    mouse1release()
 	                    task.wait(.5)
 						mouse1click()
-						print("YO6")
+						task.wait(1)
         				if isleftpressed() or isleftclicked() then 
         					if spookedfishcheck() then
         						resetfish()
