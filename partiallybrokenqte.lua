@@ -32,7 +32,7 @@ local function reliabletp(target)
 	task.wait(0.1)
 	task.wait(3.5)
 	keyrelease(0x51)
-	if getDistance(root.Position, target) > 15 then
+	if getDistance(root.Position, target) > 30 then
 		keypress(0x51)
 		task.wait(0.2)
 		root.CFrame = CFrame.new(target + Vector3.new(0, 3, 0))
@@ -162,7 +162,7 @@ local function watersplash()
         end
     end
 end
-local time = 500
+local time = 300
 local lastkey = ""
 local running = true
 task.spawn(function()
@@ -197,9 +197,9 @@ task.spawn(function()
 						task.wait(1)
 						time = time - 1
 						if time == 0 then
-							time = 500
+							time = 300
 							resetfish()
-							task.wait(0.4)
+							task.wait(1)
 						end
 					end	
 				end)
