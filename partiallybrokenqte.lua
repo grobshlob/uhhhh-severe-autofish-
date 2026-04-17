@@ -1,4 +1,4 @@
-send_notification("dont move once u execute: 38.1", "warning")
+send_notification("dont move once u execute: 38.3", "warning")
 print("HI i updated38")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
@@ -22,6 +22,7 @@ local function getDistance(a, b)
 end
 
 local parts = {"SaintsRightArm", "SaintsRightLeg", "SaintsRibcage", "SaintsLeftArm", "SaintsLeftLeg", "SaintsHeart"}
+local checkedparts = {}
 
 
 local function textcheck()
@@ -244,6 +245,7 @@ task.spawn(function()
 						for _, v in pairs(ws:GetChildren()) do
 							if v:IsA("BasePart") then
 								if table.find(parts, v.Name) then
+									if checkedparts[v] then continue end
 									print("corpse part found " .. v.Name .. " checking if its a honeypot")
 									local vpos = v.Position
 									task.wait(.2)
@@ -262,6 +264,7 @@ task.spawn(function()
 										end
 									else
 										print(v.Name .. " is a honeypot")
+										checkedparts[v] = true
 									end
 								end
 							end
