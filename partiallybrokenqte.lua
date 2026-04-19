@@ -83,9 +83,9 @@ end
 local function resetfish()
 	local place = game.Workspace.Map.OldCactus.CactusModel.Cactuh
 	local placepos = place.Position
-	keypress(0x39)
+	keypress(0x30)
 	task.wait(0.1)
-	keyrelease(0x39)
+	keyrelease(0x30)
 	task.wait(1)
 	reliabletp(placepos)
 	task.wait(1)
