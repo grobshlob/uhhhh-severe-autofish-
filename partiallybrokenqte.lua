@@ -1,4 +1,4 @@
-send_notification("version: 40", "warning")
+send_notification("version: 40.1", "warning")
 print("HI i updated40")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
@@ -262,30 +262,29 @@ local function getwater()
     end
 	for _, b in pairs(ws:GetChildren()) do
 		if b:IsA("BasePart") and b.Name == "WaterSplashContainer" then
-			if b:FindFirstChild("RippleWater") then
-				local root = char:FindFirstChild("HumanoidRootPart")
-				local ok, h = pcall(function() 
-					return getDistance(b.Position, root.Position) >= 40
-				end)
-				if not ok or h then
-					continue
+			local root = char:FindFirstChild("HumanoidRootPart")
+			local ok, h = pcall(function() 
+				return getDistance(b.Position, root.Position) >= 40
+			end)
+			if not ok or h then
+				continue
+			end
+			local wpos = b.Position
+			if wpos then
+				print(vpos)
+				print(wpos)
+				local dist = get2dDistance(wpos, vpos)
+				if dist <= radius2 then
+					found2 = true
 				end
-				local wpos = b.Position
-				if wpos then
-					print(vpos)
-					print(wpos)
-					local dist = get2dDistance(wpos, vpos)
-					if dist <= radius2 then
-						found2 = true
-					end
-				else
-					found2 = false
-				end
+			else
+				found2 = false
 			end
 		end
-		if found2 then
-			bpos = wpos
-		end
+	end
+	if found2 then
+		bpos = wpos
+		vpos = nil
 	end
 	return found2
 end
