@@ -1,4 +1,4 @@
-send_notification("version: 39.2", "warning")
+send_notification("version: 39.3", "warning")
 print("HI i updated39")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
@@ -9,6 +9,7 @@ local char = lp.Character
 local root = char:FindFirstChild("HumanoidRootPart")
 local radius = 40
 local vpos = nil
+local bpos = nil
 local ogpos = nil
 
 local toggle = false
@@ -18,6 +19,9 @@ local qteLabel = container.Circle.KeyLabel
 
 local function getDistance(a, b)
     return math.sqrt((a.X - b.X)^2 + (a.Y - b.Y)^2 + (a.Z - b.Z)^2)
+end
+local function get2dDistance(a, b)
+	return math.sqrt((a.X - b.X)^2 + (a.Z - b.Z)^2)
 end
 
 
@@ -48,6 +52,10 @@ end
 local function resetfish()
 	local place = game.Workspace.Map.OldCactus.CactusModel.Cactuh
 	local placepos = place.Position
+	keypress(0x37)
+	task.wait(0.1)
+	keyrelease(0x37)
+	task.wait(1)
 	reliabletp(placepos)
 	task.wait(1)
 	keypress(0x57)
@@ -87,6 +95,8 @@ local function getthebob()
 	end
 	if found then
 		vpos = hi
+	else
+		vpos = nil
 	end
 	return found
 end
@@ -147,30 +157,60 @@ task.spawn(function()
         end)
     end
 end)
-local radius2 = 1
-local function watersplash()
-    if getthebob() then
-    	for _, b in pairs(ws:GetChildren()) do
-        	if b:IsA("Part") and b:FindFirstChild("RippleWater") then
-            	local ok, wpos = pcall(function()
-					return b.Position
+local radius2 = .5
+local function getwater()
+	local found2 = false
+    if not vpos or typeof(vpos) ~= "Vector3" then 
+        getthebob() 
+    end
+	for _, b in pairs(ws:GetChildren()) do
+		if b:IsA("BasePart") and b.Name == "WaterSplashContainer" then
+			if b:FindFirstChild("RippleWater") then
+				local root = char:FindFirstChild("HumanoidRootPart")
+				local ok, h = pcall(function() 
+					return getDistance(b.Position, root.Position) >= 40
 				end)
-                if ok and wpos then
-					local dist = getDistance(wpos, vpos)
+				if not ok or h then
+					continue
+				end
+				local wpos = b.Position
+				if wpos then
+					print(vpos)
+					print(wpos)
+					local dist = get2dDistance(wpos, vpos)
 					if dist <= radius2 then
-						task.wait(.25)
-	                	mouse1press()
-	                    task.wait(0.25)
-	                    mouse1release()
-	                    task.wait(.5)
-						mouse1click()
-                	end
+						found2 = true
+					end
+				else
+					found2 = false
 				end
 			end
-        end
-    end
+		end
+		if found2 then
+			bpos = wpos
+		end
+	end
+	return found2
 end
-local time = 900
+
+
+
+local function cast()
+	if getwater() then
+		task.wait(.1)
+		mouse1press()
+		task.wait(0.2)
+		mouse1release()
+		task.wait(.5)
+		mouse1press()
+		task.wait(0.2)
+		mouse1release()
+		vpos = nil
+		bpos = nil
+	end
+end
+
+local time = 500
 local lastkey = ""
 local running = true
 task.spawn(function()
@@ -197,7 +237,14 @@ task.spawn(function()
 				task.spawn(function()
 					while toggle do
 						task.wait(0.2)
-						if getthebob() then watersplash() end
+						if getthebob() then 
+							if getwater() then
+								cast()
+							end
+						else
+							mouse1click()
+							task.wait(3.5)
+						end	
 					end
 				end)
 				task.spawn(function()
@@ -205,7 +252,7 @@ task.spawn(function()
 						task.wait(1)
 						time = time - 1
 						if time == 0 then
-							time = 900
+							time = 500
 							resetfish()
 							task.wait(1)
 						end
