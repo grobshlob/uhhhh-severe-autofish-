@@ -1,5 +1,5 @@
-send_notification("version: 40.1", "warning")
-print("HI i updated40")
+send_notification("version: 42", "warning")
+print("HI i updated42")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -64,8 +64,8 @@ end
 local function gototree()
 	for _, v in pairs(trees:GetDescendants()) do
 		if v:IsA("BasePart") and v.Name == "TreeBark" then
-		if v.Transparency ~= 0 then return end
-		v.CanCollide = false
+			if v.Transparency ~= 0 then continue end
+			v.CanCollide = false
 			local tpos = v.Position
 			reliabletp(tpos)
 			task.wait(1)
@@ -74,6 +74,7 @@ local function gototree()
 			if getDistance(rpos, tpos) <= 70 then
 				root.CFrame = CFrame.lookAt(tpos, tpos)
 				choptree()
+				break
 			end
 		end
 	end
@@ -82,9 +83,9 @@ end
 local function resetfish()
 	local place = game.Workspace.Map.OldCactus.CactusModel.Cactuh
 	local placepos = place.Position
-	keypress(0x37)
+	keypress(0x39)
 	task.wait(0.1)
-	keyrelease(0x37)
+	keyrelease(0x39)
 	task.wait(1)
 	reliabletp(placepos)
 	task.wait(1)
@@ -289,7 +290,17 @@ local function getwater()
 	return found2
 end
 
-
+local function checkbait()
+	local baitcheck = false
+	local backpack = lp:FindFirstChild("Backpack")
+	local bait = backpack:FindFirstChild("Bait")
+	if bait then
+		baitcheck = true
+	end
+	return baitcheck
+end
+		
+		
 
 local function cast()
 	if getwater() then
@@ -298,6 +309,23 @@ local function cast()
 		task.wait(0.2)
 		mouse1release()
 		task.wait(.5)
+		local ok, vis = pcall(function()
+            return container.Visible
+        end)
+		if checkbait() and not ok or not vis then
+			keypress(0x39)
+			task.wait(0.2)
+			keyrelease(0x39)
+			task.wait(0.75)
+			mouse1click()
+			keypress(0x39)
+			task.wait(0.2)
+			keyrelease(0x39)
+			task.wait(0.5)
+			keypress(0x30)
+			task.wait(0.2)
+			keyrelease(0x30)
+		end
 		mouse1press()
 		task.wait(0.2)
 		mouse1release()
@@ -306,7 +334,7 @@ local function cast()
 	end
 end
 
-local time = 500
+local time = 600
 local lastkey = ""
 local running = true
 task.spawn(function()
@@ -330,7 +358,7 @@ task.spawn(function()
 		if current == "F1" and lastkey ~= "F1" then
 			toggle = not toggle
 			if toggle then
-				send_notification("auto fish started, cast to begin", "info")
+				send_notification("auto fish started", "info")
 				ogpos = root.Position
 				root.CFrame = CFrame.new(ogpos)
 				task.spawn(function()
@@ -351,7 +379,7 @@ task.spawn(function()
 						task.wait(1)
 						time = time - 1
 						if time == 0 then
-							time = 500
+							time = 600
 							resetfish()
 							task.wait(1)
 						end
@@ -364,6 +392,9 @@ task.spawn(function()
 			toggle2 = not toggle2
 			if toggle2 then
 				send_notification("auto lumber on", "info")
+				keypress(0x38)
+				task.wait(0.2)
+				keyrelease(0x38)
 				task.spawn(function()
 					while toggle2 do
 						task.wait(0.2)
@@ -380,7 +411,7 @@ end)
 
 
 
-send_notification("fishing bot running,", "info")
+send_notification("fishing bot running", "info")
 task.wait(1)
-send_notification("toggle autofish: f1", "info")
-send_notification("toggle autolumber: f2", "info")
+send_notification("toggle autofish: f1. Have your rod at 0 and your bait, if you are using any, at 9.", "info")
+send_notification("toggle autolumber: f2. have your axe at 8", "info")
