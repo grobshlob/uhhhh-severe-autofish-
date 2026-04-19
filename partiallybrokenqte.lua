@@ -1,9 +1,14 @@
-send_notification("version: 39.3", "warning")
-print("HI i updated39")
+send_notification("version: 40", "warning")
+print("HI i updated40")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
 local ws = game:GetService("Workspace")
+local camera = ws.CurrentCamera
+local npc = ws:FindFirstChild("NPC")
+local dan = npc:FindFirstChild("Daniel")
+local map = ws:FindFirstChild("Map")
+local trees = map:FindFirstChild("ForestTrees")
 local lp = player.LocalPlayer
 local char = lp.Character
 local root = char:FindFirstChild("HumanoidRootPart")
@@ -13,6 +18,7 @@ local bpos = nil
 local ogpos = nil
 
 local toggle = false
+local toggle2 = false
 
 local container = lp.PlayerGui.MashingSystem.Container
 local qteLabel = container.Circle.KeyLabel
@@ -48,6 +54,30 @@ local function reliabletp(target)
 	keyrelease(0x51)
 end
 
+local function choptree()
+	for i = 1, 26 do
+		mouse1click()
+		task.wait(1.25)
+	end
+end
+
+local function gototree()
+	for _, v in pairs(trees:GetDescendants()) do
+		if v:IsA("BasePart") and v.Name == "TreeBark" then
+		if v.Transparency ~= 0 then return end
+		v.CanCollide = false
+			local tpos = v.Position
+			reliabletp(tpos)
+			task.wait(1)
+			root = char:FindFirstChild("HumanoidRootPart")
+			local rpos = root.Position
+			if getDistance(rpos, tpos) <= 70 then
+				root.CFrame = CFrame.lookAt(tpos, tpos)
+				choptree()
+			end
+		end
+	end
+end
 
 local function resetfish()
 	local place = game.Workspace.Map.OldCactus.CactusModel.Cactuh
@@ -101,6 +131,73 @@ local function getthebob()
 	return found
 end
 
+
+local function autosellfish()
+	local head = dan:FindFirstChild("Head")
+	local hpos = head.Position
+	local screenpos, visible = camera:WorldToScreenPoint(dan:FindFirstChild("HumanoidRootPart").Position)
+	reliabletp(hpos)
+	task.wait(1)
+	root.CFrame = CFrame.new(hpos.X - 6, hpos.Y, hpos.Z)
+	task.wait(1)
+	print(screenpos)
+	if visible then
+		local screenpos, visible = camera:WorldToScreenPoint(dan:FindFirstChild("HumanoidRootPart").Position)
+		mousemoveabs(screenpos.X, screenpos.Y)
+		task.wait(0.4)
+		mouse1click()
+		task.wait(1)
+		keypress(0xDC)
+		task.wait(0.5)
+		keyrelease(0xDC)
+		for i = 1, 4 do
+			keypress(0x44)
+			task.wait(0.2)
+			keyrelease(0x44)
+		end
+		task.wait(0.5)
+		keypress(0x53)
+		task.wait(0.25)
+		keyrelease(0x53)
+		task.wait(0.05)
+		keypress(0x0D)
+		task.wait(0.25)
+		keyrelease(0x0D)
+		task.wait(0.05)
+		for i = 1, 2 do
+			keypress(0xDC)
+			task.wait(0.25)
+			keyrelease(0xDC)
+		end
+		for i = 1, 3 do
+			keypress(0x44)
+			task.wait(0.25)
+			keyrelease(0x44)
+		end
+		keypress(0x53)
+		task.wait(0.25)
+		keyrelease(0x53)
+		keypress(0x0D)
+		task.wait(0.25)
+		keyrelease(0x0D)
+		task.wait(0.05)
+		for i = 1, 2 do
+			keypress(0xDC)
+			task.wait(0.25)
+			keyrelease(0xDC)
+		end
+		for i = 1, 3 do
+			keypress(0x44)
+			task.wait(0.25)
+			keyrelease(0x44)
+		end
+		keypress(0x0D)
+		task.wait(0.25)
+		keyrelease(0x0D)
+		task.wait(0.05)
+		keypress(0xDC)
+	end
+end
 
 local reset = false
 
@@ -226,6 +323,9 @@ task.spawn(function()
 			if k == "F1" then
 				current = "F1"
 				break
+			elseif k == "F2" then
+				current = "F2"
+				break
 			end		
 		end	
 		if current == "F1" and lastkey ~= "F1" then
@@ -261,6 +361,19 @@ task.spawn(function()
 			else
 				send_notification("auto fish stopped", "info")
 			end
+		elseif current == "F2" and lastkey ~= "F2" then
+			toggle2 = not toggle2
+			if toggle2 then
+				send_notification("auto lumber on", "info")
+				task.spawn(function()
+					while toggle2 do
+						task.wait(0.2)
+						gototree()
+					end
+				end)
+			else
+				send_notification("auto lumber turned off", "info")
+			end		
 		end
 		lastkey = current
 	end
@@ -271,3 +384,4 @@ end)
 send_notification("fishing bot running,", "info")
 task.wait(1)
 send_notification("toggle autofish: f1", "info")
+send_notification("toggle autolumber: f2", "info")
