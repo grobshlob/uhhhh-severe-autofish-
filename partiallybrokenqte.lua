@@ -361,6 +361,9 @@ task.spawn(function()
 				send_notification("auto fish started", "info")
 				ogpos = root.Position
 				root.CFrame = CFrame.new(ogpos)
+				keypress(0x30)
+				task.wait(0.2)
+				keyrelease(0x30)
 				task.spawn(function()
 					while toggle do
 						task.wait(0.2)
