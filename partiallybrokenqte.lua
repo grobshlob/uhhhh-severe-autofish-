@@ -1,4 +1,4 @@
-send_notification("version: 42", "warning")
+send_notification("version: 42.1", "warning")
 print("HI i updated42")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
