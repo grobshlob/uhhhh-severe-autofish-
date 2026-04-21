@@ -1,5 +1,5 @@
-send_notification("version: 44.1", "warning")
-print("HI i updated44.1")
+send_notification("version: 44.2", "warning")
+print("HI i updated44.2")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -131,6 +131,7 @@ local function gototree()
 			keyrelease(0x38)
 			root = char:FindFirstChild("HumanoidRootPart")
 			local rpos = root.Position
+			if findammo() then return end
 			if getDistance(rpos, tpos) <= 70 then
 				root.CFrame = CFrame.lookAt(tpos, tpos)
 				choptree()
