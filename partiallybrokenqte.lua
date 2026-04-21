@@ -1,5 +1,5 @@
-send_notification("version: 44.2", "warning")
-print("HI i updated44.2")
+send_notification("version: 44.3", "warning")
+print("HI i updated44.3")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -47,7 +47,10 @@ local function newtp(target)
 	task.wait(0.2)
 	for i = 1, 5 do
 		root.CFrame = CFrame.new(target)
-		task.wait(0.4)
+		task.wait(0.1)
+		if getDistance(target, root.Position) < 10 then 
+			break
+		end
 	end
 	keyrelease(0x20)
 	task.wait(0.3)
@@ -59,6 +62,47 @@ local function newtp(target)
 	task.wait(0.3)
 	keyrelease(0x31)
 end
+local function getammo()
+	task.wait(0.5)
+	keypress(0x32)
+	task.wait(0.3)
+	keyrelease(0x32)
+	task.wait(0.2)
+	local beforepos = root.Position
+	local chiapos = chiaroot.Position
+	newtp(chiapos)
+	task.wait(0.25)
+	root.CFrame = CFrame.new(chiapos.X, chiapos.Y, chiapos.Z - 7)
+	task.wait(0.75)
+	root.CFrame = CFrame.lookAt(root.Position, ammo.Position)
+	task.wait(.4)
+	camera.CFrame = CFrame.lookAt(camera.Position, ammo.Position)
+	task.wait(.4)
+	local screenpos = camera:WorldToScreenPoint(ammo.Position)
+	mousemoveabs(screenpos.X, screenpos.Y)
+	task.wait(0.75)
+	for i = 1, 5 do
+		mouse1click()
+		task.wait(2.5)
+	end
+	keypress(0x33)
+	task.wait(0.2)
+	keyrelease(0x33)
+	task.wait(0.2)
+	local backpack = lp:FindFirstChild("Backpack")
+	if backpack:FindFirstChild("AmmoPack") then
+		for i = 1, 5 do
+			keypress(0x33)
+			task.wait(0.2)
+			keyrelease(0x33)
+			mouse1click()
+			task.wait(1)
+		end
+		keypress(0x33)
+		task.wait(0.2)
+		keyrelease(0x33)
+	end
+end
 
 local function findammo()
 	local ammo = false
@@ -68,6 +112,7 @@ local function findammo()
 			local storedammo = u:FindFirstChild("StoredAmmo")
 			local ammoinclip = u:FindFirstChild("AmmoInClip")
 			if storedammo.Value <= 8 then
+				getammo()
 				ammo = true
 				break
 			end
@@ -75,39 +120,23 @@ local function findammo()
 	end
 	return ammo
 end
-local function getammo()
-	keypress(0x32)
-	task.wait(0.3)
-	keyrelease(0x32)
-	task.wait(0.3)
-	keypress(0x32)
-	task.wait(0.3)
-	keyrelease(0x32)
-	task.wait(0.2)
-	local beforepos = root.Position
-	local chiapos = chiaroot.Position
-	newtp(chiapos)
-	task.wait(1)
-	local screenpos = camera:WorldToScreenPoint(ammo.Position)
-	root.CFrame = CFrame.lookAt(root.Position, ammo.Position)
-	task.wait(1)
-	mousemoveabs(screenpos.X, screenpos.Y)
-	task.wait(0.75)
-	for i = 1, 5 do
-		mouse1click()
-		task.wait(3)
+
+local function checkammo()
+	local ammo2 = false
+	local backpack = lp:FindFirstChild("Backpack")
+	for _, u in pairs(backpack:GetChildren()) do
+		if table.find(guns, u.Name) then
+			local storedammo = u:FindFirstChild("StoredAmmo")
+			local ammoinclip = u:FindFirstChild("AmmoInClip")
+			if storedammo.Value >= 8 then
+				ammo2 = true
+				break
+			end
+		end
 	end
-	keypress(0x33)
-	task.wait(0.2)
-	keyrelease(0x33)
-	task.wait(0.2)
-	for i = 1, 5 do
-		mouse1click()
-		task.wait(1.25)
-	end
+	return ammo2
 end
 
-				
 				
 				
 
@@ -119,23 +148,25 @@ local function choptree()
 end
 
 local function gototree()
-	for _, v in pairs(trees:GetDescendants()) do
-		if v:IsA("BasePart") and v.Name == "TreeBark" then
-			if v.Transparency ~= 0 then continue end
-			v.CanCollide = false
-			local tpos = v.Position
-			newtp(tpos)
-			task.wait(1)
-			keypress(0x38)
-			task.wait(0.5)
-			keyrelease(0x38)
-			root = char:FindFirstChild("HumanoidRootPart")
-			local rpos = root.Position
-			if findammo() then return end
-			if getDistance(rpos, tpos) <= 70 then
-				root.CFrame = CFrame.lookAt(tpos, tpos)
-				choptree()
-				break
+	if findammo() then return end
+	if checkammo() then
+		for _, v in pairs(trees:GetDescendants()) do
+			if v:IsA("BasePart") and v.Name == "TreeBark" then
+				if v.Transparency ~= 0 then continue end
+				v.CanCollide = false
+				local tpos = v.Position
+				newtp(tpos)
+				task.wait(1)
+				keypress(0x38)
+				task.wait(0.5)
+				keyrelease(0x38)
+				root = char:FindFirstChild("HumanoidRootPart")
+				local rpos = root.Position
+				if getDistance(rpos, tpos) <= 70 then
+					root.CFrame = CFrame.lookAt(tpos, tpos)
+					choptree()
+					break
+				end
 			end
 		end
 	end
@@ -397,14 +428,6 @@ task.spawn(function()
 						task.wait(0.8)
 						gototree()
 					end
-				end)
-				task.spawn(function()
-					while toggle2 do
-						task.wait(0.5)
-						if findammo() then
-							getammo()
-						end
-					end		
 				end)	
 			else
 				send_notification("auto lumber turned off", "info")
