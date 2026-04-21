@@ -1,5 +1,5 @@
-send_notification("version: 43", "warning")
-print("HI i updated43")
+send_notification("version: 44", "warning")
+print("HI i updated44")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -7,11 +7,14 @@ local ws = game:GetService("Workspace")
 local camera = ws.CurrentCamera
 local npc = ws:FindFirstChild("NPC")
 local dan = npc:FindFirstChild("Daniel")
+local chia = npc:FindFirstChild("chia")
+local chiaroot = chia:FindFirstChild("HumanoidRootPart")
 local map = ws:FindFirstChild("Map")
 local trees = map:FindFirstChild("ForestTrees")
 local lp = player.LocalPlayer
 local char = lp.Character
 local root = char:FindFirstChild("HumanoidRootPart")
+local ammo = map:FindFirstChild("Moes Guns"):FindFirstChild("AmmoPack")
 local radius = 40
 local vpos = nil
 local bpos = nil
@@ -30,7 +33,82 @@ local function get2dDistance(a, b)
 	return math.sqrt((a.X - b.X)^2 + (a.Z - b.Z)^2)
 end
 
+local guns = {"Taurus .357", "Schofield 6", "Dual Derringers", "Mauser", "Whitney Dragoon", "Colt Ocelot", "Winchester Repeater", "Maverick 88", "DB Shotgun", "Mares Leg"}
 
+local function newtp(target)
+	keypress(0x31)
+	task.wait(0.5)
+	keyrelease(0x31)
+	task.wait(0.2)
+	keypress(0x20)
+	task.wait(0.75)
+	local rpos = root.Position
+	mouse1click()
+	for i = 1, 5 do
+		root.CFrame = CFrame.new(target)
+		task.wait(0.4)
+	end
+	keyrelease(0x20)
+	task.wait(0.3)
+	keypress(0x52)
+	task.wait(0.2)
+	keyrelease(0x52)
+	task.wait(0.2)
+	keypress(0x31)
+	task.wait(0.3)
+	keyrelease(0x31)
+end
+
+local function findammo()
+	local ammo = false
+	local backpack = lp:FindFirstChild("Backpack")
+	for _, u in pairs(backpack:GetChildren()) do
+		if table.find(guns, u.Name) then
+			local storedammo = u:FindFirstChild("StoredAmmo")
+			local ammoinclip = u:FindFirstChild("AmmoInClip")
+			if storedammo.Value == 1 and ammoinclip.Value == 1 then
+				ammo = true
+				break
+			end
+		end
+	end
+	return ammo
+end
+local function getammo()
+	keypress(0x32)
+	task.wait(0.3)
+	keyrelease(0x32)
+	task.wait(0.3)
+	keypress(0x32)
+	task.wait(0.3)
+	keyrelease(0x32)
+	task.wait(0.2)
+	local beforepos = root.Position
+	local chiapos = chiaroot.Position
+	newtp(chiapos)
+	task.wait(1)
+	local screenpos = camera:WorldToScreenPoint(ammo.Position)
+	root.CFrame = CFrame.lookAt(root.Position, ammo.Position)
+	task.wait(1)
+	mousemoveabs(screenpos.X, screenpos.Y)
+	task.wait(0.75)
+	for i = 1, 5 do
+		mouse1click()
+		task.wait(3)
+	end
+	keypress(0x33)
+	task.wait(0.2)
+	keyrelease(0x33)
+	task.wait(0.2)
+	for i = 1, 5 do
+		mouse1click()
+		task.wait(1.25)
+	end
+end
+
+				
+				
+				
 
 local function choptree()
 	for i = 1, 26 do
@@ -45,13 +123,16 @@ local function gototree()
 			if v.Transparency ~= 0 then continue end
 			v.CanCollide = false
 			local tpos = v.Position
-			--reliabletp(tpos)
+			newtp(tpos)
 			task.wait(1)
+			keypress(0x38)
+			task.wait(0.5)
+			keyrelease(0x38)
 			root = char:FindFirstChild("HumanoidRootPart")
 			local rpos = root.Position
 			if getDistance(rpos, tpos) <= 70 then
-				--root.CFrame = CFrame.lookAt(tpos, tpos)
-				--choptree()
+				root.CFrame = CFrame.lookAt(tpos, tpos)
+				choptree()
 				break
 			end
 		end
@@ -261,6 +342,9 @@ task.spawn(function()
 			if k == "F1" then
 				current = "F1"
 				break
+			elseif k == "F2" then
+				current = "F2"
+				break
 			end		
 		end	
 		if current == "F1" and lastkey ~= "F1" then
@@ -299,6 +383,30 @@ task.spawn(function()
 			else
 				send_notification("auto fish stopped", "info")
 			end		
+		elseif current == "F2" and lastkey ~= "F2" then
+			toggle2 = not toggle2
+			if toggle2 then
+				send_notification("auto lumber on", "info")
+				keypress(0x38)
+				task.wait(0.2)
+				keyrelease(0x38)
+				task.spawn(function()
+					while toggle2 do
+						task.wait(0.2)
+						gototree()
+					end
+				end)
+				task.spawn(function()
+					while toggle2 do
+						task.wait(0.5)
+						if findammo() then
+							getammo()
+						end
+					end		
+				end)	
+			else
+				send_notification("auto lumber turned off", "info")
+			end
 		end
 		lastkey = current
 	end
@@ -309,3 +417,5 @@ end)
 send_notification("fishing bot running", "info")
 task.wait(1)
 send_notification("toggle autofish: f1. Have your rod at 0 and your bait, if you are using any, at 9.", "info")
+send_notification("toggle autolumber: f2. Have your gun at 1 and your axe at 8.", "info")
+send_notification("!!!NOTE:THERE MUST BE AN ITEM IN UR SECOND SLOT AND NO ITEM IN UR 3RD SLOT!!!", "warning")
