@@ -1,5 +1,5 @@
-send_notification("version: 44", "warning")
-print("HI i updated44")
+send_notification("version: 44.1", "warning")
+print("HI i updated44.1")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -44,6 +44,7 @@ local function newtp(target)
 	task.wait(0.75)
 	local rpos = root.Position
 	mouse1click()
+	task.wait(0.2)
 	for i = 1, 5 do
 		root.CFrame = CFrame.new(target)
 		task.wait(0.4)
@@ -51,7 +52,7 @@ local function newtp(target)
 	keyrelease(0x20)
 	task.wait(0.3)
 	keypress(0x52)
-	task.wait(0.2)
+	task.wait(5)
 	keyrelease(0x52)
 	task.wait(0.2)
 	keypress(0x31)
@@ -66,7 +67,7 @@ local function findammo()
 		if table.find(guns, u.Name) then
 			local storedammo = u:FindFirstChild("StoredAmmo")
 			local ammoinclip = u:FindFirstChild("AmmoInClip")
-			if storedammo.Value == 1 and ammoinclip.Value == 1 then
+			if storedammo.Value <= 8 then
 				ammo = true
 				break
 			end
@@ -392,7 +393,7 @@ task.spawn(function()
 				keyrelease(0x38)
 				task.spawn(function()
 					while toggle2 do
-						task.wait(0.2)
+						task.wait(0.8)
 						gototree()
 					end
 				end)
