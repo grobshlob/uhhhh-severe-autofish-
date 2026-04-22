@@ -1,5 +1,5 @@
-send_notification("version: 44.3", "warning")
-print("HI i updated44.3")
+send_notification("version: 45", "warning")
+print("HI i updated45")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -186,14 +186,9 @@ local function maxfish()
 	local max = false
 	local bp = lp:FindFirstChild("Backpack")
 	for _, u in pairs(bp:GetChildren()) do
-		local bass = u:FindFirstChild("Bass")
-		local snap = u:FindFirstChild("Snapper")
-		local cod = u:FindFirstChild("Cod")
-		if bass and snap and cod then
-			local quant1 = bass:FindFirstChild("Quantity")
-			local quant2 = snap:FindFirstChild("Quantity")
-			local quant3 = cod:FindFirstChild("Quantity")
-			if quant1.Value == 50 or quant2.Value == 50 or quant3.Value == 50 then
+		if u.Name == "Bass" or u.Name == "Cod" or u.Name == "Snapper" then
+			local quant = u:FindFirstChild("Quantity")
+			if quant.Value == 50 then
 				max = true
 			end
 		end	
@@ -205,89 +200,124 @@ local function maxwood()
 	local bp = lp:FindFirstChild("Backpack")
 	if not bp then return end
 	for _, i in pairs(bp:GetChildren()) do
-		local wood = i:FindFirstChild("Wood")
-		if wood then
-			local quant = wood:FindFirstChild("Quantity")
+		if i.Name == "Wood" then
+			local quant = i:FindFirstChild("Quantity")
 			if quant.Value >= 200 then
 				max2 = true
 			end
-		end	
+		end
 	end
 	return max2
 end
 local function keybinds(whichnpc)
-	for i = 1, 3 do
-		local head = whichnpc:FindFirstChild("Head")
-		local hpos = head.Position
+	local root = char:FindFirstChild("HumanoidRootPart")
+	local head = whichnpc:FindFirstChild("Head")
+	local hpos = head.Position
+	if getDistance(root.Position, hpos) >= 10 then
 		newtp(hpos)
-		task.wait(.25)
-		root.CFrame = CFrame.new(hpos.X - 6, hpos.Y, hpos.Z)
-		task.wait(.25)
-		camera.CFrame = CFrame.lookAt(camera.Position, hpos)
-		task.wait(.25)
-		local visible = camera:WorldToScreenPoint(whichnpc:FindFirstChild("HumanoidRootPart").Position)
-		if visible then
-			local screenpos, visible = camera:WorldToScreenPoint(whichnpc:FindFirstChild("HumanoidRootPart").Position)
-			mousemoveabs(screenpos.X, screenpos.Y)
-			task.wait(.5)
-			mousemoveabs(screenpos.X + 1, screenpos.Y - 2)
-			task.wait(0.4)
-			mouse1click()
-			task.wait(.2)
-			keypress(0xDC)
-			task.wait(0.1)
-			keyrelease(0xDC)
-			task.wait(0.3)
-			for i = 1, 4 do
-				keypress(0x44)
-				task.wait(0.1)
-				keyrelease(0x44)
-			end
-			task.wait(0.4)
-			keypress(0x53)
-			task.wait(0.1)
-			keyrelease(0x53)
-			task.wait(1.75)
-			keypress(0x0D)
-			task.wait(0.2)
-			keyrelease(0x0D)
-			task.wait(0.1)
-			for i = 1, 2 do
-				keypress(0xDC)
-				task.wait(0.1)
-				keyrelease(0xDC)
-			end
-			for i = 1, 4 do
-				keypress(0x44)
-				task.wait(0.1)
-				keyrelease(0x44)
-			end
-			keypress(0x53)
-			task.wait(0.1)
-			keyrelease(0x53)
-			task.wait(0.3)
-			keypress(0x0D)
-			task.wait(0.1)
-			keyrelease(0x0D)
-			task.wait(0.1)
-			for i = 1, 2 do
-				keypress(0xDC)
-				task.wait(0.1)
-				keyrelease(0xDC)
-			end
-			for i = 1, 4 do
-				keypress(0x44)
-				task.wait(0.1)
-				keyrelease(0x44)
-			end
-			task.wait(1)
-			keypress(0x0D)
-			task.wait(0.1)
-			keyrelease(0x0D)
-			task.wait(0.1)
-			keypress(0xDC)
-			task.wait(0.5)
+	end
+	task.wait(.25)
+	root.CFrame = CFrame.new(hpos.X - 6, hpos.Y, hpos.Z)
+	task.wait(.25)
+	camera.CFrame = CFrame.lookAt(camera.Position, hpos)
+	task.wait(.25)
+	local visible = camera:WorldToScreenPoint(whichnpc:FindFirstChild("HumanoidRootPart").Position)
+	if visible then
+		local screenpos, visible = camera:WorldToScreenPoint(whichnpc:FindFirstChild("HumanoidRootPart").Position)
+		mousemoveabs(screenpos.X, screenpos.Y)
+		task.wait(.75)
+		mousemoveabs(screenpos.X + 1, screenpos.Y - 2)
+		task.wait(1)
+		mouse1click()
+		task.wait(.75)
+		keypress(0xDC)
+		task.wait(0.1)
+		keyrelease(0xDC)
+		task.wait(0.3)
+		for i = 1, 4 do
+			keypress(0x44)
+			task.wait(0.125)
+			keyrelease(0x44)
 		end
+		task.wait(0.4)
+		keypress(0x41)
+		task.wait(0.1)
+		keyrelease(0x41)
+		task.wait(0.2)
+		keypress(0x57)
+		task.wait(0.1)
+		keyrelease(0x57)
+		task.wait(0.2)
+		for i = 1, 2 do
+			keypress(0x53)
+			task.wait(0.1)
+			keyrelease(0x53)
+		end
+		task.wait(1.75)
+		keypress(0x0D)
+		task.wait(0.2)
+		keyrelease(0x0D)
+		task.wait(0.1)
+		for i = 1, 2 do
+			keypress(0xDC)
+			task.wait(0.125)
+			keyrelease(0xDC)
+		end
+		for i = 1, 4 do
+			keypress(0x44)
+			task.wait(0.1)
+			keyrelease(0x44)
+		end
+		task.wait(0.4)
+		keypress(0x41)
+		task.wait(0.1)
+		keyrelease(0x41)
+		task.wait(0.2)
+		keypress(0x57)
+		task.wait(0.1)
+		keyrelease(0x57)
+		task.wait(0.2)
+		for i = 1, 2 do
+			keypress(0x53)
+			task.wait(0.1)
+			keyrelease(0x53)
+		end
+		task.wait(0.3)
+		keypress(0x0D)
+		task.wait(0.1)
+		keyrelease(0x0D)
+		task.wait(0.1)
+		for i = 1, 2 do
+			keypress(0xDC)
+			task.wait(0.125)
+			keyrelease(0xDC)
+		end
+		task.wait(0.2)
+		for i = 1, 4 do
+			keypress(0x44)
+			task.wait(0.125)
+			keyrelease(0x44)
+		end
+		task.wait(0.4)
+		keypress(0x41)
+		task.wait(0.1)
+		keyrelease(0x41)
+		task.wait(0.2)
+		keypress(0x57)
+		task.wait(0.1)
+		keyrelease(0x57)
+		task.wait(0.2)
+		keypress(0x53)
+		task.wait(0.1)
+		keyrelease(0x53)
+		task.wait(1)
+		keypress(0x0D)
+		task.wait(0.1)
+		keyrelease(0x0D)
+		task.wait(0.1)
+		keypress(0xDC)
+		task.wait(0.1)
+		keyrelease(0xDC)
 	end
 end
 
@@ -299,7 +329,13 @@ local function autosellfish()
 	if maxfish() then
 		if not ammo2 then getammo() end
 		if ammo2 and dan then
-			keybinds(dan)
+			keypress(0x30)
+			task.wait(0.1)
+			keyrelease(0x30)
+			for i = 1, 3 do
+				keybinds(dan)
+			end
+			task.wait(0.2)
 			newtp(ogpos)
 		end
 	end
@@ -310,6 +346,9 @@ local function autosellwood()
 	if maxwood() then
 		if findammo() then return end
 		if ammo2 and chuck then
+			keypress(0x38)
+			task.wait(0.1)
+			keypress(0x38)
 			keybinds(chuck)
 		end
 	end
