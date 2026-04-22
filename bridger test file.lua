@@ -208,7 +208,7 @@ local function maxwood()
 		local wood = i:FindFirstChild("Wood")
 		if wood then
 			local quant = wood:FindFirstChild("Quantity")
-			if quant.Value > 200 then
+			if quant.Value >= 200 then
 				max2 = true
 			end
 		end	
