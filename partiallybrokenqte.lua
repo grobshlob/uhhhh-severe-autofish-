@@ -1,5 +1,6 @@
-send_notification("version: 44.3", "warning")
-print("HI i updated44.3")
+--!optimize 2
+send_notification("version: 45", "warning")
+print("HI i updated45")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -7,6 +8,8 @@ local ws = game:GetService("Workspace")
 local camera = ws.CurrentCamera
 local npc = ws:FindFirstChild("NPC")
 local dan = npc:FindFirstChild("Daniel")
+local chuck = npc:FindFirstChild("ChuckB")
+local chuckroot = chuck:FindFirstChild("HumanoidRootPart")
 local chia = npc:FindFirstChild("chia")
 local chiaroot = chia:FindFirstChild("HumanoidRootPart")
 local map = ws:FindFirstChild("Map")
@@ -34,8 +37,33 @@ local function get2dDistance(a, b)
 end
 
 local guns = {"Taurus .357", "Schofield 6", "Dual Derringers", "Mauser", "Whitney Dragoon", "Colt Ocelot", "Winchester Repeater", "Maverick 88", "DB Shotgun", "Mares Leg"}
-
+local function checkammo()
+	local ammo2 = false
+	local stored = true
+	local backpack = lp:FindFirstChild("Backpack")
+	for _, u in pairs(backpack:GetChildren()) do
+		if table.find(guns, u.Name) then
+			local storedammo = u:FindFirstChild("StoredAmmo")
+			local ammoinclip = u:FindFirstChild("AmmoInClip")
+			if storedammo.Value >= 8 then
+				ammo2 = true
+			end
+			if ammoinclip.Value <= 1 then
+				stored = false
+				break
+			else break
+			end
+		end
+	end
+	return ammo2, stored
+end
 local function newtp(target)
+	local _, stored = checkammo()
+	if not stored then
+		keypress(0x52)
+		task.wait(5)
+		keyrelease(0x52)
+	end
 	keypress(0x31)
 	task.wait(0.5)
 	keyrelease(0x31)
@@ -54,14 +82,17 @@ local function newtp(target)
 	end
 	keyrelease(0x20)
 	task.wait(0.3)
-	keypress(0x52)
-	task.wait(5)
-	keyrelease(0x52)
+	if not stored then
+		keypress(0x52)
+		task.wait(5)
+		keyrelease(0x52)
+	end
 	task.wait(0.2)
 	keypress(0x31)
 	task.wait(0.3)
 	keyrelease(0x31)
 end
+
 local function getammo()
 	task.wait(0.5)
 	keypress(0x32)
@@ -120,26 +151,6 @@ local function findammo()
 	end
 	return ammo
 end
-
-local function checkammo()
-	local ammo2 = false
-	local backpack = lp:FindFirstChild("Backpack")
-	for _, u in pairs(backpack:GetChildren()) do
-		if table.find(guns, u.Name) then
-			local storedammo = u:FindFirstChild("StoredAmmo")
-			local ammoinclip = u:FindFirstChild("AmmoInClip")
-			if storedammo.Value >= 8 then
-				ammo2 = true
-				break
-			end
-		end
-	end
-	return ammo2
-end
-
-				
-				
-
 local function choptree()
 	for i = 1, 26 do
 		mouse1click()
@@ -148,8 +159,9 @@ local function choptree()
 end
 
 local function gototree()
+	local ammo2, stored = checkammo()
 	if findammo() then return end
-	if checkammo() then
+	if ammo2 then
 		for _, v in pairs(trees:GetDescendants()) do
 			if v:IsA("BasePart") and v.Name == "TreeBark" then
 				if v.Transparency ~= 0 then continue end
@@ -168,6 +180,177 @@ local function gototree()
 					break
 				end
 			end
+		end
+	end
+end
+local function maxfish()
+	local max = false
+	local bp = lp:FindFirstChild("Backpack")
+	for _, u in pairs(bp:GetChildren()) do
+		if u.Name == "Bass" or u.Name == "Cod" or u.Name == "Snapper" then
+			local quant = u:FindFirstChild("Quantity")
+			if quant.Value == 50 then
+				max = true
+			end
+		end	
+	end
+	return max
+end
+local function maxwood()
+	local max2 = false
+	local bp = lp:FindFirstChild("Backpack")
+	if not bp then return end
+	for _, i in pairs(bp:GetChildren()) do
+		if i.Name == "Wood" then
+			local quant = i:FindFirstChild("Quantity")
+			if quant.Value >= 200 then
+				max2 = true
+			end
+		end
+	end
+	return max2
+end
+local function keybinds(whichnpc)
+	local root = char:FindFirstChild("HumanoidRootPart")
+	local head = whichnpc:FindFirstChild("Head")
+	local hpos = head.Position
+	if getDistance(root.Position, hpos) >= 10 then
+		newtp(hpos)
+	end
+	task.wait(.25)
+	root.CFrame = CFrame.new(hpos.X - 6, hpos.Y, hpos.Z)
+	task.wait(.25)
+	camera.CFrame = CFrame.lookAt(camera.Position, hpos)
+	task.wait(.25)
+	local visible = camera:WorldToScreenPoint(whichnpc:FindFirstChild("HumanoidRootPart").Position)
+	if visible then
+		local screenpos, visible = camera:WorldToScreenPoint(whichnpc:FindFirstChild("HumanoidRootPart").Position)
+		mousemoveabs(screenpos.X, screenpos.Y)
+		task.wait(.75)
+		mousemoveabs(screenpos.X + 1, screenpos.Y - 2)
+		task.wait(1)
+		mouse1click()
+		task.wait(.75)
+		keypress(0xDC)
+		task.wait(0.1)
+		keyrelease(0xDC)
+		task.wait(0.3)
+		for i = 1, 4 do
+			keypress(0x44)
+			task.wait(0.125)
+			keyrelease(0x44)
+		end
+		task.wait(0.4)
+		keypress(0x41)
+		task.wait(0.1)
+		keyrelease(0x41)
+		task.wait(0.2)
+		keypress(0x57)
+		task.wait(0.1)
+		keyrelease(0x57)
+		task.wait(0.2)
+		for i = 1, 2 do
+			keypress(0x53)
+			task.wait(0.1)
+			keyrelease(0x53)
+		end
+		task.wait(1.75)
+		keypress(0x0D)
+		task.wait(0.2)
+		keyrelease(0x0D)
+		task.wait(0.1)
+		for i = 1, 2 do
+			keypress(0xDC)
+			task.wait(0.125)
+			keyrelease(0xDC)
+		end
+		for i = 1, 4 do
+			keypress(0x44)
+			task.wait(0.1)
+			keyrelease(0x44)
+		end
+		task.wait(0.4)
+		keypress(0x41)
+		task.wait(0.1)
+		keyrelease(0x41)
+		task.wait(0.2)
+		keypress(0x57)
+		task.wait(0.1)
+		keyrelease(0x57)
+		task.wait(0.2)
+		for i = 1, 2 do
+			keypress(0x53)
+			task.wait(0.1)
+			keyrelease(0x53)
+		end
+		task.wait(0.3)
+		keypress(0x0D)
+		task.wait(0.1)
+		keyrelease(0x0D)
+		task.wait(0.1)
+		for i = 1, 2 do
+			keypress(0xDC)
+			task.wait(0.125)
+			keyrelease(0xDC)
+		end
+		task.wait(0.2)
+		for i = 1, 4 do
+			keypress(0x44)
+			task.wait(0.125)
+			keyrelease(0x44)
+		end
+		task.wait(0.4)
+		keypress(0x41)
+		task.wait(0.1)
+		keyrelease(0x41)
+		task.wait(0.2)
+		keypress(0x57)
+		task.wait(0.1)
+		keyrelease(0x57)
+		task.wait(0.2)
+		keypress(0x53)
+		task.wait(0.1)
+		keyrelease(0x53)
+		task.wait(1)
+		keypress(0x0D)
+		task.wait(0.1)
+		keyrelease(0x0D)
+		task.wait(0.1)
+		keypress(0xDC)
+		task.wait(0.1)
+		keyrelease(0xDC)
+	end
+end
+
+
+
+			
+local function autosellfish()
+	local ammo2, stored = checkammo()
+	if maxfish() then
+		if not ammo2 then getammo() end
+		if ammo2 and dan then
+			keypress(0x30)
+			task.wait(0.1)
+			keyrelease(0x30)
+			for i = 1, 3 do
+				keybinds(dan)
+			end
+			task.wait(0.2)
+			newtp(ogpos)
+		end
+	end
+end
+
+local function autosellwood()
+	local ammo2, stored = checkammo()
+	if maxwood() then
+		if findammo() then return end
+		if ammo2 and chuck then
+			keypress(0x38)
+			task.wait(0.1)
+			keypress(0x38)
+			keybinds(chuck)
 		end
 	end
 end
@@ -392,14 +575,17 @@ task.spawn(function()
 				task.spawn(function()
 					while toggle do
 						task.wait(0.2)
-						if getthebob() then 
-							if getwater() then
-								cast()
-							end
+						if maxfish() then autosellfish() 
 						else
-							mouse1click()
-							task.wait(3.5)
-						end	
+							if getthebob() then 
+								if getwater() then
+									cast()
+								end
+							else
+								mouse1click()
+								task.wait(3.5)
+							end	
+						end
 					end
 				end)
 				task.spawn(function()
@@ -426,7 +612,17 @@ task.spawn(function()
 				task.spawn(function()
 					while toggle2 do
 						task.wait(0.8)
-						gototree()
+						if maxwood() then autosellwood()
+						else
+							gototree()
+						end
+						local hum = char:FindFirstChild("Humanoid")
+						if hum.Health == 0 then
+							task.wait(10)
+							keypress(0x38)
+							task.wait(0.2)
+							keyrelease(0x38)
+						end
 					end
 				end)	
 			else
