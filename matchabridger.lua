@@ -467,7 +467,7 @@ local function getwater()
 			local ok, h = pcall(function() 
 				return getDistance(b.Position, root.Position) >= 40
 			end)
-			if not ok or not h then
+			if not ok or h then
 				continue
 			end
       if getDistance(b.Position, ogpos) >= radius then
