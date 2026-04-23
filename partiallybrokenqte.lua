@@ -5,6 +5,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefunc
 
 local player = game:GetService("Players")
 local ws = game:GetService("Workspace")
+local uis = game:GetService("UserInputService")
 local camera = ws.CurrentCamera
 local npc = ws:FindFirstChild("NPC")
 local dan = npc:FindFirstChild("Daniel")
@@ -567,6 +568,20 @@ local function grabroka()
 	task.wait(0.75)
 end
 
+local function safespot()
+	task.wait(0.5)
+	local safe = Vector3.new(-4881.71, 45, -2198.22)
+	local cam = Vector3.new(-4896.62, 59.21, -2197.83)
+
+	local lookat = Vector3.new(-4832.38, 21.72, -2199.70)
+	newtp(safe)
+	task.wait(0.4)
+	camera.CFrame = CFrame.lookAt(cam, lookat)
+	root.CFrame = CFrame.new(safe)
+	task.wait(0.5)
+	uis:SetMouseLocation(978, 461)
+end
+
 local time = 600
 local lastkey = ""
 local running = true
@@ -595,6 +610,8 @@ task.spawn(function()
 			toggle = not toggle
 			if toggle then
 				send_notification("auto fish started", "info")
+				safespot()
+				task.wait(0.1)
 				ogpos = root.Position
 				root.CFrame = CFrame.new(ogpos)
 				keypress(0x30)
