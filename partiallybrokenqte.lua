@@ -1,6 +1,6 @@
 --!optimize 2
-send_notification("version: 45.3", "warning")
-print("HI i updated45.3")
+send_notification("version: 45.2", "warning")
+print("HI i updated45.2")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -48,7 +48,7 @@ local function checkammo()
 			if storedammo.Value >= 8 then
 				ammo2 = true
 			end
-			if ammoinclip.Value <= 1 then
+			if ammoinclip.Value <= 2 then
 				stored = false
 				break
 			end
@@ -58,14 +58,15 @@ local function checkammo()
 end
 local function newtp(target)
 	local _, stored = checkammo()
+	keypress(0x31)
+	task.wait(0.5)
+	keyrelease(0x31)
+	task.wait(0.2)
 	if not stored then
 		keypress(0x52)
 		task.wait(5)
 		keyrelease(0x52)
 	end
-	keypress(0x31)
-	task.wait(0.5)
-	keyrelease(0x31)
 	task.wait(0.2)
 	keypress(0x20)
 	task.wait(0.75)
