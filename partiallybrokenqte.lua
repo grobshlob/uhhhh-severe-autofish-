@@ -1,6 +1,6 @@
 --!optimize 2
-send_notification("version: 45", "warning")
-print("HI i updated45")
+send_notification("version: 45.1", "warning")
+print("HI i updated45.1")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -51,7 +51,6 @@ local function checkammo()
 			if ammoinclip.Value <= 1 then
 				stored = false
 				break
-			else break
 			end
 		end
 	end
@@ -82,12 +81,6 @@ local function newtp(target)
 	end
 	keyrelease(0x20)
 	task.wait(0.3)
-	if not stored then
-		keypress(0x52)
-		task.wait(5)
-		keyrelease(0x52)
-	end
-	task.wait(0.2)
 	keypress(0x31)
 	task.wait(0.3)
 	keyrelease(0x31)
@@ -328,7 +321,7 @@ end
 local function autosellfish()
 	local ammo2, stored = checkammo()
 	if maxfish() then
-		if not ammo2 then getammo() end
+		if findammo() then return end
 		if ammo2 and dan then
 			keypress(0x30)
 			task.wait(0.1)
@@ -475,7 +468,7 @@ local function getwater()
 			local ok, h = pcall(function() 
 				return getDistance(b.Position, root.Position) >= 40
 			end)
-			if not ok or h then
+			if not ok or not h then
 				continue
 			end
 			local wpos = b.Position
@@ -508,7 +501,7 @@ local function checkbait()
 	return baitcheck
 end
 		
-		
+	
 
 local function cast()
 	if getwater() then
@@ -542,6 +535,35 @@ local function cast()
 	end
 end
 
+local function goplant()
+	if findammo() then return end
+	local place = Vector3.new(-7857.3037109375, 67.37139892578125, -2060.570556640625)
+	task.wait(0.5)
+	newtp(place)
+end
+
+local function autoroka()
+	local ammo2, _ = checkammo()
+	if findammo() then return end
+	goplant()
+	task.wait(0.5)
+	keypress(0x37)
+	task.wait(0.1)
+	keyrelease(0x37)
+	task.wait(0.75)
+	mouse1click()
+	task.wait(0.5)
+	local safe2 = Vector3.new(-5233.71484375, 82.72335815429688, -4119.47607421875)
+	newtp(safe2)
+	task.wait(60)
+end
+
+local function grabroka()
+	if not ammo2 then getammo() end
+	goplant()
+	task.wait(0.75)
+end
+
 local time = 600
 local lastkey = ""
 local running = true
@@ -560,6 +582,9 @@ task.spawn(function()
 				break
 			elseif k == "F2" then
 				current = "F2"
+				break
+			elseif k == "F3" then
+				current = "F3"
 				break
 			end		
 		end	
@@ -628,6 +653,31 @@ task.spawn(function()
 			else
 				send_notification("auto lumber turned off", "info")
 			end
+		elseif current == "F3" and lastkey ~= "F3" then
+			toggle3 = not toggle3
+			if toggle3 then
+				send_notification("waiting for roka fruit", "info")
+				task.spawn(function()
+					while toggle3 do
+						task.wait(0.8)
+						local bp = lp:FindFirstChild("Backpack")
+						for _, j in pairs(bp:GetChildren()) do
+							if j.Name == "Rokakaka Seed" then
+								for i = 1, 2 do
+									keypress(0x32)
+									task.wait(0.2)
+									keypress(0x32)
+								end
+								autoroka()
+								task.wait(0.2)
+								grabroka()
+							end
+						end
+					end
+				end)
+			else
+				send_notification("stopped looking for roka", "info")
+			end			
 		end
 		lastkey = current
 	end
