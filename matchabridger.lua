@@ -1,7 +1,6 @@
 --!optimize 2
-notify("version: 45.1", "warning")
-print("HI i updated45.1")
-
+notify("version: 45.3", "warning")
+print("HI i updated45.3")
 local player = game:GetService("Players")
 local ws = game:GetService("Workspace")
 local camera = ws.CurrentCamera
@@ -16,7 +15,7 @@ local trees = map:FindFirstChild("ForestTrees")
 local lp = player.LocalPlayer
 local char = lp.Character
 local root = char:FindFirstChild("HumanoidRootPart")
-local ammo = map:FindFirstChild("Moes Guns")
+local ammo = map:FindFirstChild("Moes Guns"):FindFirstChild("AmmoPack")
 local radius = 40
 local vpos = nil
 local bpos = nil
@@ -72,7 +71,7 @@ local function newtp(target)
 	mouse1click()
 	task.wait(0.2)
 	for i = 1, 5 do
-		root.CFrame = CFrame.new(target)
+		root.CFrame = CFrame.new(target.X, target.Z, target.Y)
 		task.wait(0.1)
 		if getDistance(target, root.Position) < 10 then 
 			break
@@ -470,34 +469,34 @@ local function getwater()
 			if not ok or h then
 				continue
 			end
-      if getDistance(b.Position, ogpos) >= radius then
-  			local wpos = b.Position
-        print(wpos)
-        print(vpos)
-  			if wpos then
-  				local dist = get2dDistance(wpos, vpos)
-  				if dist <= radius2 then
-  					found2 = true
-  				end
-  			else
-  				found2 = false
-  			end
-  		end
-  	end
-  	if found2 then
-  		bpos = wpos
-  		vpos = nil
-  	end
-  	return found2
-  end
+			local wpos = b.Position
+			if wpos then
+				print(vpos)
+				print(wpos)
+				local dist = get2dDistance(wpos, vpos)
+				if dist <= radius2 then
+					found2 = true
+				end
+			else
+				found2 = false
+			end
+		end
+	end
+	if found2 then
+		bpos = wpos
+		vpos = nil
+	end
+	return found2
 end
 
 local function checkbait()
 	local baitcheck = false
 	local backpack = lp:FindFirstChild("Backpack")
-	local bait = backpack:FindFirstChild("Bait")
-	if bait then
-		baitcheck = true
+	if not backpack then return end
+	for _, i in pairs(backpack:GetChildren()) do
+		if i.Name == "Bait" then
+			baitcheck = true
+		end
 	end
 	return baitcheck
 end
@@ -518,12 +517,12 @@ local function cast()
 			keypress(0x39)
 			task.wait(0.2)
 			keyrelease(0x39)
-			task.wait(0.75)
+			task.wait(0.3)
 			mouse1click()
 			keypress(0x39)
 			task.wait(0.2)
 			keyrelease(0x39)
-			task.wait(0.5)
+			task.wait(0.2)
 			keypress(0x30)
 			task.wait(0.2)
 			keyrelease(0x30)
@@ -572,11 +571,11 @@ task.spawn(function()
 	while true do
 		task.wait(0.05)
 		if not isrbxactive() then
+			task.wait(0.3)
 			continue
 		end
 		local current = ""
 		if iskeypressed(0x70) then
-			print("HI3")
 			current = "F1"
 		elseif iskeypressed(0x71) then
 			current = "F2"
@@ -584,7 +583,6 @@ task.spawn(function()
 			current = "F3"
 		end		
 		if current == "F1" and lastkey ~= "F1" then
-			print("HI4")
 			toggle = not toggle
 			if toggle then
 				notify("auto fish started", "info")
@@ -652,7 +650,7 @@ task.spawn(function()
 		elseif current == "F3" and lastkey ~= "F3" then
 			toggle3 = not toggle3
 			if toggle3 then
-				send_notification("waiting for roka fruit", "info")
+				notify("waiting for roka fruit", "info")
 				task.spawn(function()
 					while toggle3 do
 						task.wait(0.8)
