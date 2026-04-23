@@ -1,6 +1,6 @@
 --!optimize 2
-send_notification("version: 45.1", "warning")
-print("HI i updated45.1")
+send_notification("version: 45.2", "warning")
+print("HI i updated45.2")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -468,7 +468,7 @@ local function getwater()
 			local ok, h = pcall(function() 
 				return getDistance(b.Position, root.Position) >= 40
 			end)
-			if not ok or not h then
+			if not ok or h then
 				continue
 			end
 			local wpos = b.Position
