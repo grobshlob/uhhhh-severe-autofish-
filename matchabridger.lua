@@ -593,7 +593,7 @@ task.spawn(function()
 				keyrelease(0x30)
 				task.spawn(function()
 					while toggle do
-						task.wait(0.2)
+						task.wait(0.1)
 						if maxfish() then autosellfish() 
 						else
 							if getthebob() then 
