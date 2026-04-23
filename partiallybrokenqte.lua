@@ -349,6 +349,7 @@ local function autosellwood()
 end
 
 local function resetfish()
+	keypress(0x20)
 	task.wait(1)
 	keypress(0x30)
 	task.wait(0.2)
@@ -369,6 +370,8 @@ local function resetfish()
 	keypress(0x41)
 	task.wait(10)
 	keyrelease(0x41)
+	task.wait(0.5)
+	keyrelease(0x20)
 	task.wait(0.5)
 	root.CFrame = CFrame.new(ogpos)
 end
