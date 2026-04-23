@@ -517,7 +517,8 @@ local function cast()
 		local ok, vis = pcall(function()
             return container.Visible
         end)
-		if checkbait() and not ok or not vis then
+		if checkbait() and not ok then
+			print("Found bait")
 			keypress(0x39)
 			task.wait(0.2)
 			keyrelease(0x39)
