@@ -1,6 +1,6 @@
 --!optimize 2
-send_notification("version: 45.2", "warning")
-print("HI i updated45.2")
+send_notification("version: 45.3", "warning")
+print("HI i updated45.3")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 
 local player = game:GetService("Players")
@@ -494,9 +494,11 @@ end
 local function checkbait()
 	local baitcheck = false
 	local backpack = lp:FindFirstChild("Backpack")
-	local bait = backpack:FindFirstChild("Bait")
-	if bait then
-		baitcheck = true
+	if not backpack then return end
+	for _, i in pairs(backpack:GetChildren()) do
+		if i.Name == "Bait" then
+			baitcheck = true
+		end
 	end
 	return baitcheck
 end
@@ -517,12 +519,12 @@ local function cast()
 			keypress(0x39)
 			task.wait(0.2)
 			keyrelease(0x39)
-			task.wait(0.75)
+			task.wait(0.3)
 			mouse1click()
 			keypress(0x39)
 			task.wait(0.2)
 			keyrelease(0x39)
-			task.wait(0.5)
+			task.wait(0.2)
 			keypress(0x30)
 			task.wait(0.2)
 			keyrelease(0x30)
