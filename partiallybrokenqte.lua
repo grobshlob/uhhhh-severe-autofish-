@@ -48,7 +48,7 @@ local function checkammo()
 			if storedammo.Value >= 8 then
 				ammo2 = true
 			end
-			if ammoinclip.Value <= 1 then
+			if ammoinclip.Value <= 2 then
 				stored = false
 				break
 			end
