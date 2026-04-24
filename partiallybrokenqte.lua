@@ -494,15 +494,12 @@ local function getwater()
 end
 
 local function checkbait()
-	local baitcheck = false
+	local bait = false
 	local backpack = lp:FindFirstChild("Backpack")
-	if not backpack then return end
-	for _, i in pairs(backpack:GetChildren()) do
-		if i.Name == "Bait" then
-			baitcheck = true
-		end
-	end
-	return baitcheck
+	task.wait(0.5)
+	if backpack and backpack:FindFirstChild("Bait") then
+		bait = true end
+	return bait
 end
 		
 	
@@ -514,10 +511,8 @@ local function cast()
 		task.wait(0.2)
 		mouse1release()
 		task.wait(.5)
-		local ok, vis = pcall(function()
-            return container.Visible
-        end)
-		if checkbait() and not ok then
+		local vis = container.Visible
+		if checkbait() and not vis then
 			print("Found bait")
 			keypress(0x39)
 			task.wait(0.2)
