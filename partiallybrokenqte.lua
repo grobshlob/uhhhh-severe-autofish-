@@ -2,7 +2,7 @@
 send_notification("version: 45.3", "warning")
 print("HI i updated45.3")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
-
+task.wait(3)
 local player = game:GetService("Players")
 local ws = game:GetService("Workspace")
 local uis = game:GetService("UserInputService")
@@ -699,9 +699,6 @@ task.spawn(function()
 	end
 end)
 
-
-
-send_notification("fishing bot running", "info")
 task.wait(1)
 send_notification("toggle autofish: f1. Have your rod at 0 and your bait, if you are using any, at 9.", "info")
 send_notification("toggle autolumber: f2. Have your gun at 1 and your axe at 8.", "info")
