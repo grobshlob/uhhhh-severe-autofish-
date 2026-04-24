@@ -87,6 +87,19 @@ local function newtp(target)
 	task.wait(0.3)
 	keyrelease(0x31)
 end
+local function safespot()
+	task.wait(0.5)
+	local safe = Vector3.new(-4881.71, 45, -2198.22)
+	local cam = Vector3.new(-4896.62, 59.21, -2197.83)
+
+	local lookat = Vector3.new(-4832.38, 21.72, -2199.70)
+	newtp(safe)
+	task.wait(0.4)
+	camera.CFrame = CFrame.lookAt(cam, lookat)
+	root.CFrame = CFrame.new(safe)
+	task.wait(0.5)
+	uis:SetMouseLocation(978, 461)
+end
 
 local function getammo()
 	task.wait(0.5)
@@ -351,6 +364,10 @@ local function autosellwood()
 end
 
 local function resetfish()
+	task.wait(0.2)
+	keypress(0x30)
+	task.wait(0.1)
+	keyrelease(0x30)
 	local head = char:FindFirstChild("Head")
 	local cpos = cam.Position
 	local headp = head.Position
@@ -378,7 +395,11 @@ local function resetfish()
 	task.wait(10)
 	keyrelease(0x41)
 	task.wait(0.5)
-	root.CFrame = CFrame.new(ogpos)
+	safespot()
+	task.wait(0.2)
+	keypress(0x30)
+	task.wait(0.1)
+	keyrelease(0x30)
 end
 
 local function getthebob()
@@ -570,19 +591,6 @@ local function grabroka()
 	task.wait(0.75)
 end
 
-local function safespot()
-	task.wait(0.5)
-	local safe = Vector3.new(-4881.71, 45, -2198.22)
-	local cam = Vector3.new(-4896.62, 59.21, -2197.83)
-
-	local lookat = Vector3.new(-4832.38, 21.72, -2199.70)
-	newtp(safe)
-	task.wait(0.4)
-	camera.CFrame = CFrame.lookAt(cam, lookat)
-	root.CFrame = CFrame.new(safe)
-	task.wait(0.5)
-	uis:SetMouseLocation(978, 461)
-end
 
 local time = 600
 local lastkey = ""
