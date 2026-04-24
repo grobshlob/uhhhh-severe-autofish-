@@ -1,6 +1,6 @@
 --!optimize 2
-send_notification("version: 45.5", "warning")
-print("HI i updated45.5")
+send_notification("version: 45.6", "warning")
+print("HI i updated45.6")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 task.wait(3)
 local player = game:GetService("Players")
