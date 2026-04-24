@@ -1,6 +1,6 @@
 --!optimize 2
-send_notification("version: 45.3", "warning")
-print("HI i updated45.3")
+send_notification("version: 45.4", "warning")
+print("HI i updated45.4")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sploiter13/severefuncs/refs/heads/main/merge2.lua"))()
 task.wait(3)
 local player = game:GetService("Players")
@@ -351,6 +351,12 @@ local function autosellwood()
 end
 
 local function resetfish()
+	local head = char:FindFirstChild("Head")
+	local cpos = cam.Position
+	local headp = head.Position
+	cam.CFrame = CFrame.new(cpos.X, headp.Y, cpos.Z)
+	task.wait(0.75)
+	keypress(0x20)
 	task.wait(1)
 	keypress(0x30)
 	task.wait(0.2)
