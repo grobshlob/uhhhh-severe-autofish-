@@ -26,9 +26,14 @@ local ogpos = nil
 
 local toggle = false
 local toggle2 = false
+local gui = lp.PlayerGui
 
-local container = lp.PlayerGui.MashingSystem.Container
+local container = gui.MashingSystem.Container
 local qteLabel = container.Circle.KeyLabel
+local shift = gui:FindFirstChild("ConsoleLock")
+if not shift then return end
+local lock = shift:FindFirstChild("ImageButton")
+if not lock then return end
 
 local function getDistance(a, b)
     return math.sqrt((a.X - b.X)^2 + (a.Y - b.Y)^2 + (a.Z - b.Z)^2)
@@ -249,13 +254,29 @@ local function keybinds(whichnpc)
 			keyrelease(0x44)
 		end
 		task.wait(0.4)
-		keypress(0x53)
-		task.wait(0.1)
-		keyrelease(0x53)
-		task.wait(2.25)
-		keypress(0x0D)
-		task.wait(0.2)
-		keyrelease(0x0D)
+		if lock.Visible then
+			keypress(0x41)
+			task.wait(0.1)
+			keyrelease(0x41)
+			task.wait(0.2)
+			for i = 1, 2 do
+				keypress(0x53)
+				task.wait(0.1)
+				keyrelease(0x53)
+			end
+			task.wait(2.25)
+			keypress(0x0D)
+			task.wait(0.2)
+			keyrelease(0x0D)
+		else
+			keypress(0x53)
+			task.wait(0.1)
+			keyrelease(0x53)
+			task.wait(2.25)
+			keypress(0x0D)
+			task.wait(0.2)
+			keyrelease(0x0D)
+		end
 		task.wait(0.1)
 		for i = 1, 2 do
 			keypress(0xDC)
@@ -268,13 +289,29 @@ local function keybinds(whichnpc)
 			keyrelease(0x44)
 		end
 		task.wait(0.4)
-		keypress(0x53)
-		task.wait(0.1)
-		keyrelease(0x53)
-		task.wait(0.3)
-		keypress(0x0D)
-		task.wait(0.1)
-		keyrelease(0x0D)
+		if lock.Visible then
+			keypress(0x41)
+			task.wait(0.1)
+			keyrelease(0x41)
+			task.wait(0.2)
+			for i = 1, 2 do
+				keypress(0x53)
+				task.wait(0.1)
+				keyrelease(0x53)
+			end
+			task.wait(0.5)
+			keypress(0x0D)
+			task.wait(0.2)
+			keyrelease(0x0D)
+		else
+			keypress(0x53)
+			task.wait(0.1)
+			keyrelease(0x53)
+			task.wait(0.3)
+			keypress(0x0D)
+			task.wait(0.1)
+			keyrelease(0x0D)
+		end
 		task.wait(0.1)
 		for i = 1, 2 do
 			keypress(0xDC)
@@ -288,7 +325,15 @@ local function keybinds(whichnpc)
 			keyrelease(0x44)
 		end
 		task.wait(0.4)
-		keyrelease(0x53)
+		if lock.Visible then
+			keypress(0x41)
+			task.wait(0.1)
+			keyrelease(0x41)
+			task.wait(0.2)
+			keypress(0x53)
+			task.wait(0.1)
+			keyrelease(0x53)
+		end			
 		task.wait(1)
 		keypress(0x0D)
 		task.wait(0.1)
