@@ -68,7 +68,6 @@ RunService.Render:Connect(function()
 					local proj = children[i]
 					if not proj then continue end
 					if proj and proj.Parent and (proj.Name == "DynamiteProjectile" or proj.Name == "MolotovProjectile") then
-						if proj
 						proj.CFrame = CFrame.new(worldpos)
 					end
 				end
