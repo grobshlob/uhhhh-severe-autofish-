@@ -40,6 +40,7 @@ end
 RunService.Render:Connect(function()
 	
 	local color, name, spos, worldpos = tinmr()
+	local uh = false
 	DrawingImmediate.Circle(
 		mousepos(), 
 		radius, 
@@ -58,17 +59,21 @@ RunService.Render:Connect(function()
 			true
 		)
 		if isleftpressed() and worldpos then
+			uh = true
 			print("checking")
 			local projf = ws:FindFirstChild("ProjectileContainer")
 			local children = projf:GetChildren()
 			if #children > 0 then
 				for i = 1, #children do
 					local proj = children[i]
-					if proj.Name == "DynamiteProjectile" or proj.Name == "MolotovProjectile" then
+					if not proj then continue end
+					if proj and proj.Parent and (proj.Name == "DynamiteProjectile" or proj.Name == "MolotovProjectile") then
+						if proj
 						proj.CFrame = CFrame.new(worldpos)
 					end
 				end
 			end
+		else uh = false
 		end
 	end		
 end)
