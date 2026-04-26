@@ -74,6 +74,8 @@ local function newtp(target)
 		keyrelease(0x52)
 	end
 	task.wait(0.2)
+	keyrelease(0x20)
+	task.wait(0.2)
 	keypress(0x20)
 	task.wait(0.75)
 	local rpos = root.Position
