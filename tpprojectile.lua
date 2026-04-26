@@ -36,43 +36,29 @@ local function tinmr()
 	end
 	return color, name, spos, worldpos
 end
-
+local lastUpdate = 0
 RunService.Render:Connect(function()
-	
-	local color, name, spos, worldpos = tinmr()
-	local uh = false
-	DrawingImmediate.Circle(
-		mousepos(), 
-		radius, 
-		color,
-		1, 
-		200,
-		2
-	)
-	if name and spos then
-		DrawingImmediate.Text(
-			spos,
-			10,
-			color,
-			1,
-			name,
-			true
-		)
-		if isleftpressed() and worldpos then
-			uh = true
-			print("checking")
-			local projf = ws:FindFirstChild("ProjectileContainer")
-			local children = projf:GetChildren()
-			if #children > 0 then
-				for i = 1, #children do
-					local proj = children[i]
-					if not proj then continue end
-					if proj and proj.Parent and (proj.Name == "DynamiteProjectile" or proj.Name == "MolotovProjectile") then
-						proj.CFrame = CFrame.new(worldpos)
-					end
-				end
-			end
-		else uh = false
-		end
-	end		
+    local color, name, spos, worldpos = tinmr()
+    
+    DrawingImmediate.Circle(mousepos(), radius, color, 1, 200, 2)
+    
+    if name and spos then
+        DrawingImmediate.Text(spos, 10, color, 1, name, true)
+        
+        if isleftpressed() and worldpos then
+            if tick() - lastUpdate >= 0.1 then
+                lastUpdate = tick()
+                local projf = ws:FindFirstChild("ProjectileContainer")
+                if not projf then return end
+                for _, proj in ipairs(projf:GetChildren()) do
+                    if proj.Name == "DynamiteProjectile" or proj.Name == "MolotovProjectile" then
+                        pcall(function()
+                            proj.CFrame = CFrame.new(worldpos)
+                            proj.AssemblyLinearVelocity = Vector3.zero
+                        end)
+                    end
+                end
+            end
+        end
+    end
 end)
