@@ -54,7 +54,6 @@ RunService.Render:Connect(function()
                     if proj.Name == "DynamiteProjectile" or proj.Name == "MolotovProjectile" then
                         pcall(function()
                             proj.CFrame = CFrame.new(worldpos)
-                            proj.AssemblyLinearVelocity = Vector3.zero
                         end)
                     end
                 end
