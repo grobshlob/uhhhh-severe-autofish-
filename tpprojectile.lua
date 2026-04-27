@@ -46,7 +46,7 @@ RunService.Render:Connect(function()
         DrawingImmediate.Text(spos, 10, color, 1, name, true)
         
         if isleftpressed() and worldpos then
-            if tick() - lastUpdate >= 0.2 then
+            if tick() - lastUpdate >= 0.1 then
                 lastUpdate = tick()
                 local projf = ws:FindFirstChild("ProjectileContainer")
                 if not projf then return end
