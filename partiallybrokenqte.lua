@@ -648,6 +648,7 @@ task.spawn(function()
 							time = 300
 							resetfish(ke)
 							if ke == 0x44 then ke = 0x41 elseif ke == 0x41 then ke = 0x44 end
+							ogpos = root.Position
 							task.wait(1)
 						end
 					end	
