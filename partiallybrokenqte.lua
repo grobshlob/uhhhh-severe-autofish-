@@ -30,6 +30,8 @@ local gui = lp.PlayerGui
 
 local container = gui.MashingSystem.Container
 local qteLabel = container.Circle.KeyLabel
+local hparent = gui.QTESystem.QTECircle
+local qtetext = hparent.KeyLabel
 local shift = gui:FindFirstChild("ConsoleLock")
 if not shift then return end
 local lock = shift:FindFirstChild("ImageButton")
@@ -435,6 +437,9 @@ task.spawn(function()
             local ok, vis = pcall(function()
                 return container.Visible
             end)
+			local ok2, vis2 = pcall(function()
+				return hparent.Visible
+			end)
             if ok and vis then
                 local ok2, text = pcall(function()
                     return qteLabel.Text
@@ -477,7 +482,19 @@ task.spawn(function()
 						reset = false
                     end
                 end
-            end
+			elseif ok3 and vis2 then
+				local ok4, text2 = pcall(function()
+					return qtetext.Text
+				end
+				if ok4 and text2 and text2 ~= "" then
+					local clean2 = text:gsub("%s", ""):upper()
+                    local keycode2 = string.byte(clean)
+                    keypress(keycode2)
+                    task.wait(0.05)
+                    keyrelease(keycode2)
+                    print("QTE pressed:", clean2)
+				end
+			end
         end)
     end
 end)
