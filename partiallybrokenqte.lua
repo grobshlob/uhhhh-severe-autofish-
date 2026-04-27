@@ -81,9 +81,9 @@ local function newtp(target)
 	local rpos = root.Position
 	mouse1click()
 	task.wait(0.1)
-	for i = 1, 3 do
-		mouse1click()
+	for i = 1, 3 do	
 		root.CFrame = CFrame.new(target)
+		mouse1click()
 		task.wait(0.1)
 		if getDistance(target, root.Position) < 10 then 
 			break
