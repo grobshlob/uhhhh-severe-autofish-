@@ -51,7 +51,7 @@ RunService.Render:Connect(function()
                 local projf = ws:FindFirstChild("ProjectileContainer")
                 if not projf then return end
                 for _, proj in ipairs(projf:GetChildren()) do
-                    if proj.Name == "DynamiteProjectile" or proj.Name == "MolotovProjectile" then
+                    if proj.Name == "DynamiteProjectile" or proj.Name == "MolotovProjectile" or proj.Name == "BoltSniperBullet" then
                         pcall(function()
                             proj.CFrame = CFrame.new(worldpos)
                         end)
