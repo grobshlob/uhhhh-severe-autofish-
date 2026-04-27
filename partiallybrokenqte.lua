@@ -392,39 +392,10 @@ local function autosellwood()
 	end
 end
 
-local function resetfish()
-	task.wait(0.2)
-	keypress(0x30)
-	task.wait(0.1)
-	keyrelease(0x30)
-	task.wait(0.75)
-	keypress(0x20)
-	task.wait(1)
-	keypress(0x30)
-	task.wait(0.2)
-	keyrelease(0x30)
-	task.wait(0.5)
-	keypress(0x57)
-	task.wait(10)
-	keyrelease(0x57)
-	task.wait(0.5)
-	keypress(0x44)
-	task.wait(10)
-	keyrelease(0x44)
-	task.wait(0.5)
-	keypress(0x53)
-	task.wait(10)
-	keyrelease(0x53)
-	task.wait(0.5)
-	keypress(0x41)
-	task.wait(10)
-	keyrelease(0x41)
-	task.wait(0.5)
-	safespot()
-	task.wait(0.2)
-	keypress(0x30)
-	task.wait(0.1)
-	keyrelease(0x30)
+local function resetfish(key)
+	keypress(key)
+	task.wait(5)
+	keyrelease(key)
 end
 
 local function getthebob()
@@ -617,8 +588,9 @@ local function grabroka()
 end
 
 
-local time = 600
+local time = 300
 local lastkey = ""
+local ke = 0x44
 local running = true
 task.spawn(function()
 	while true do
@@ -673,8 +645,9 @@ task.spawn(function()
 						task.wait(1)
 						time = time - 1
 						if time == 0 then
-							time = 600
-							resetfish()
+							time = 300
+							resetfish(ke)
+							if ke == 0x44 then ke = 0x41 elseif ke == 0x41 then ke = 0x44 end
 							task.wait(1)
 						end
 					end	
@@ -695,13 +668,6 @@ task.spawn(function()
 						if maxwood() then autosellwood()
 						else
 							gototree()
-						end
-						local hum = char:FindFirstChild("Humanoid")
-						if hum.Health == 0 then
-							task.wait(10)
-							keypress(0x38)
-							task.wait(0.2)
-							keyrelease(0x38)
 						end
 					end
 				end)	
