@@ -485,11 +485,11 @@ task.spawn(function()
 						if not char or char == nil then return end
 						local croot = char and char:FindFirstChild("HumanoidRootPart")
 						if croot then
-							task.wait(3)
+							task.wait(2.3)
 							local rpos = croot.Position
 							local dist2 = getDistance(rpos, ogpos)
 							if dist2 > 2 then
-								task.wait(3)
+								task.wait(.5)
 								print("GOING")
 								croot.CFrame = CFrame.new(ogpos)
 								task.wait(1)
