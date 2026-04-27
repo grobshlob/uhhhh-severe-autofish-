@@ -127,7 +127,14 @@ task.spawn(function()
 									if not ok or not cpos then continue end
 									local honeypos = math.floor(cpos.X) .. "," .. math.floor(cpos.Y) .. "," .. math.floor(cpos.Z)
 									if checkedparts[honeypos] then continue end
-									if table.find(checkedparts.name, v.Name) then 
+									local alreadyChecked = false
+									for _, entry in pairs(checkedparts) do
+									    if type(entry) == "table" and entry.name == v.Name then
+									        alreadyChecked = true
+									        break
+									    end
+									end
+									if alreadyChecked then 
 										continue 
 									else
 										checkedparts = {}
