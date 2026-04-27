@@ -82,6 +82,7 @@ local function newtp(target)
 	mouse1click()
 	task.wait(0.1)
 	for i = 1, 3 do
+		mouse1click()
 		root.CFrame = CFrame.new(target)
 		task.wait(0.1)
 		if getDistance(target, root.Position) < 10 then 
