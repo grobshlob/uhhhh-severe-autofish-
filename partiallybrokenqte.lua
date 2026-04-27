@@ -69,7 +69,7 @@ local function newtp(target)
 	keypress(0x31)
 	task.wait(0.5)
 	keyrelease(0x31)
-	task.wait(0.2)
+	task.wait(1)
 	if not stored then
 		keypress(0x52)
 		task.wait(5)
@@ -253,9 +253,9 @@ local function keybinds(whichnpc)
 		task.wait(0.1)
 		keyrelease(0xDC)
 		task.wait(0.3)
-		for i = 1, 4 do
+		for i = 1, 3 do
 			keypress(0x44)
-			task.wait(0.125)
+			task.wait(0.1)
 			keyrelease(0x44)
 		end
 		task.wait(0.4)
@@ -289,10 +289,10 @@ local function keybinds(whichnpc)
 		task.wait(0.1)
 		for i = 1, 2 do
 			keypress(0xDC)
-			task.wait(0.125)
+			task.wait(0.1)
 			keyrelease(0xDC)
 		end
-		for i = 1, 4 do
+		for i = 1, 3 do
 			keypress(0x44)
 			task.wait(0.1)
 			keyrelease(0x44)
@@ -328,13 +328,13 @@ local function keybinds(whichnpc)
 		task.wait(0.1)
 		for i = 1, 2 do
 			keypress(0xDC)
-			task.wait(0.125)
+			task.wait(0.1)
 			keyrelease(0xDC)
 		end
 		task.wait(0.2)
-		for i = 1, 4 do
+		for i = 1, 3 do
 			keypress(0x44)
-			task.wait(0.125)
+			task.wait(0.1)
 			keyrelease(0x44)
 		end
 		task.wait(0.4)
@@ -347,7 +347,7 @@ local function keybinds(whichnpc)
 			task.wait(0.1)
 			keyrelease(0x53)
 		end			
-		task.wait(1)
+		task.wait(1.5)
 		keypress(0x0D)
 		task.wait(0.1)
 		keyrelease(0x0D)
