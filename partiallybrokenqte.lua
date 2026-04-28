@@ -482,13 +482,13 @@ task.spawn(function()
 						reset = false
                     end
                 end
-			elseif ok3 and vis2 then
+			elseif ok2 and vis2 then
 				local ok4, text2 = pcall(function()
 					return qtetext.Text
 				end)
 				if ok4 and text2 and text2 ~= "" then
-					local clean2 = text:gsub("%s", ""):upper()
-                    local keycode2 = string.byte(clean)
+					local clean2 = text2:gsub("%s", ""):upper()
+                    local keycode2 = string.byte(clean2)
                     keypress(keycode2)
                     task.wait(0.05)
                     keyrelease(keycode2)
