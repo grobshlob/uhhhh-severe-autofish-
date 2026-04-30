@@ -22,17 +22,20 @@ local function tinmr()
 		if v ~= lp then
 			local tchar = v.Character
 			if not tchar then continue end
-			local root = tchar:FindFirstChild("HumanoidRootPart").Position
-			if not root then continue end
-			local screenpos = cam:WorldToScreenPoint(root)
-			if get2dDistance(mpos, screenpos) <= radius + 10 then
-				color = Color3.new(1, 0, 0)
-				name = v.Name
-				spos = screenpos
-				worldpos = root
-				break
+			local ok, root = pcall(function()
+				return tchar:FindFirstChild("HumanoidRootPart").Position
+			end)
+			if ok and root then
+				local screenpos = cam:WorldToScreenPoint(root)
+				if get2dDistance(mpos, screenpos) <= radius + 10 then
+					color = Color3.new(1, 0, 0)
+					name = v.Name
+					spos = screenpos
+					worldpos = root
+					break
+				end
 			end
-		end
+		end		
 	end
 	return color, name, spos, worldpos
 end
