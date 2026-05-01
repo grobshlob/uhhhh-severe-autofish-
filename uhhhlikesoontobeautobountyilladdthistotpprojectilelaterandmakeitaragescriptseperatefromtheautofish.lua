@@ -37,7 +37,9 @@ local function checkammo()
 	end
 	return ammo2, stored
 end
+local tping = false
 local function newtp(target)
+	tping = true
 	local _, stored = checkammo()
 	keypress(0x31)
 	task.wait(0.5)
@@ -141,7 +143,7 @@ task.spawn(function()
 				print("target found: " .. target)
 			end
 		end
-		if ctarget and ctarget.Character then
+		if ctarget and ctarget.Character and not tping then
 		    local tchar = ctarget.Character
 		    if char and tchar then
 		        local root = char:FindFirstChild("HumanoidRootPart")
@@ -149,25 +151,27 @@ task.spawn(function()
 		        local troot = tchar:FindFirstChild("HumanoidRootPart")
 		        if root and troot then
 					local tpos = troot.Position
-		        	if getDistance(tpos, root.Position) > 15 then newtp(tpos) end
-		            angle = angle + (dt * speed)
-		            local x = math.cos(angle) * radius
-		            local z = math.sin(angle) * radius
-		            local newPos = tpos + Vector3.new(x, 4, z)
-		            local screenpos = cam:WorldToScreenPoint(tpos)
-		            root.CFrame = CFrame.lookAt(newPos, tpos)
-		            local backOffset = 10 
-					local upOffset = 3
-					local camPos = root.CFrame.Position + (root.CFrame.LookVector * -backOffset) + (root.CFrame.UpVector * upOffset)
-					cam.CFrame = CFrame.lookAt(camPos, troot.Position)
-					if not killing then
-						killing = true
-						task.spawn(function()
-							kill(lasttarget)
-							killing = false
-						end)
+		        	if getDistance(tpos, root.Position) > 15 then 
+						newtp(tpos) 
+					else
+						angle = angle + (dt * speed)
+			            local x = math.cos(angle) * radius
+			            local z = math.sin(angle) * radius
+			            local newPos = tpos + Vector3.new(x, 4, z)
+			            local screenpos = cam:WorldToScreenPoint(tpos)
+			            root.CFrame = CFrame.lookAt(newPos, tpos)
+			            local backOffset = 10 
+						local upOffset = 3
+						local camPos = root.CFrame.Position + (root.CFrame.LookVector * -backOffset) + (root.CFrame.UpVector * upOffset)
+						cam.CFrame = CFrame.lookAt(camPos, troot.Position)
+						if not killing then
+							killing = true
+							task.spawn(function()
+								kill(lasttarget)
+								killing = false
+							end)
+						end	
 					end
-
 		        end
 		    else 
 				ctarget = nil
