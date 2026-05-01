@@ -11,8 +11,8 @@ local ws = game:GetService("Workspace")
 local cam = ws.CurrentCamera
 local uis = game:GetService("UserInputService")
 --semi automatic not effective as of 5/1
-local speed = 10
-local radius = 15
+local speed = 5
+local radius = 7.5
 local angle = 0
 local function getDistance(a, b)
     return math.sqrt((a.X - b.X)^2 + (a.Y - b.Y)^2 + (a.Z - b.Z)^2)
