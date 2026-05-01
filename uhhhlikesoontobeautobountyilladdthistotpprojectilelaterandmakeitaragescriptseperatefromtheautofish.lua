@@ -10,7 +10,7 @@ local rs = game:GetService("RunService")
 local ws = game:GetService("Workspace")
 local cam = ws.CurrentCamera
 local uis = game:GetService("UserInputService")
-
+--semi automatic not effective as of 5/1
 local speed = 5
 local radius = 10
 local angle = 0
