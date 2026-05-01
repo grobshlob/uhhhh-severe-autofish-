@@ -10,6 +10,7 @@ local target = "sirillsalot"
 local speed = 3
 local radius = 10
 local angle = 0
+--fixing
 local function getDistance(a, b)
     return math.sqrt((a.X - b.X)^2 + (a.Y - b.Y)^2 + (a.Z - b.Z)^2)
 end
@@ -65,6 +66,30 @@ local function newtp(target)
 	keypress(0x31)
 	task.wait(0.3)
 	keyrelease(0x31)
+end
+local function textcheck()
+    local target = nil
+    local ok, gui = pcall(function()
+        local notifier = lp.PlayerGui:FindFirstChild("NotifierGui")
+        if not notifier then return nil end
+        return notifier:FindFirstChild("MessageContainer")
+    end)
+    if ok and gui then
+        local noti2 = gui:FindFirstChild("Notification")
+        if not noti2 then return false end
+        print("hi")
+        local ok2, text = pcall(function() return noti2.Text end)
+        if ok2 and text then
+			for _, v in pairs(players:GetChildren()) do
+				if string.find(text:lower(), v.Name:lower()) then
+					target = v.Name
+					print(target)
+					break
+				end
+			end
+		end
+    end
+    return target
 end
 task.spawn(function()
 	while true do
