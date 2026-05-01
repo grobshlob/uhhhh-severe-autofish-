@@ -121,7 +121,6 @@ local function kill(person)
 						reloading = false
 					end)
 				end
-				end
 			end
 		end
 	end
