@@ -96,22 +96,31 @@ local function textcheck()
     end
     return target
 end
+local reloading = false
 local function kill(person)
 	local _, stored = checkammo()
 	for _, v in pairs(players:GetChildren()) do
 		if v.Name == person then
-			local health = v.Character:FindFirstChild("Humanoid").Health
-			if health ~= 0 then 
-			
+			local hum = v.Character:FindFirstChild("Humanoid")
+			if hum and hum.Health ~= 0 then 
 				keypress(0x31)
 				task.wait(0.1)
 				keyrelease(0x31)
-				task.wait(3)
-				for i = 1, 12 do
+				task.wait(1.75)
+				if not reloading then
 					mouse1click()
 					task.wait(.75)
-					if not stored then keypress(0x53) task.wait(5) keyrelease(0x53) end
 					if health == 0 then break end
+				end
+				if not stored and not reloading then 
+					reloading = true
+					task.spawn(function()	
+						keypress(0x53) 
+						task.wait(5) 
+						keyrelease(0x53)
+						reloading = false
+					end)
+				end
 				end
 			end
 		end
