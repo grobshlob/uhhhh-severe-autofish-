@@ -1,4 +1,8 @@
-
+local function text(source)
+	local string = memory.readstring(source, 0xa60)
+	--only for v390
+	return string
+end
 local players = game:GetService("Players")
 local lp = players.LocalPlayer
 local char = lp.Character
@@ -6,11 +10,10 @@ local rs = game:GetService("RunService")
 local ws = game:GetService("Workspace")
 local cam = ws.CurrentCamera
 local uis = game:GetService("UserInputService")
-local target = "sirillsalot"
-local speed = 3
+
+local speed = 5
 local radius = 10
 local angle = 0
---fixing
 local function getDistance(a, b)
     return math.sqrt((a.X - b.X)^2 + (a.Y - b.Y)^2 + (a.Z - b.Z)^2)
 end
@@ -26,7 +29,7 @@ local function checkammo()
 			if storedammo.Value >= 8 then
 				ammo2 = true
 			end
-			if ammoinclip.Value <= 2 then
+			if ammoinclip.Value <= 1 then
 				stored = false
 				break
 			end
@@ -50,6 +53,7 @@ local function newtp(target)
 	task.wait(0.2)
 	keypress(0x20)
 	task.wait(0.75)
+	local root = char:FindFirstChild("HumanoidRootPart")
 	local rpos = root.Position
 	mouse1click()
 	task.wait(0.1)
@@ -76,12 +80,13 @@ local function textcheck()
     end)
     if ok and gui then
         local noti2 = gui:FindFirstChild("Notification")
-        if not noti2 then return false end
-        print("hi")
-        local ok2, text = pcall(function() return noti2.Text end)
+        if not noti2 then return nil end
+        local ok2, text = pcall(function() return text(noti2) end)
         if ok2 and text then
 			for _, v in pairs(players:GetChildren()) do
-				if string.find(text:lower(), v.Name:lower()) then
+				local merging = "HAS STARTED MERGING WITH"
+				local merged = "HAS SUCCESSFULLY MERGED"
+				if string.find(text:lower(), v.Name:lower()) and not string.find(text:lower(), merging:lower()) and not string.find(text:lower(), merged:lower()) then
 					target = v.Name
 					print(target)
 					break
@@ -91,29 +96,75 @@ local function textcheck()
     end
     return target
 end
+local function kill(person)
+	local _, stored = checkammo()
+	for _, v in pairs(players:GetChildren()) do
+		if v.Name == person then
+			local health = v.Character:FindFirstChild("Humanoid").Health
+			if health ~= 0 then 
+			
+				keypress(0x31)
+				task.wait(0.1)
+				keyrelease(0x31)
+				task.wait(3)
+				for i = 1, 12 do
+					mouse1click()
+					task.wait(.75)
+					if not stored then keypress(0x53) task.wait(5) keyrelease(0x53) end
+					if health == 0 then break end
+				end
+			end
+		end
+	end
+end
+local lasttarget = ""
+local ctarget = nil
+local killing = false
 task.spawn(function()
 	while true do
 	    local char = lp.Character
-	    local dt = task.wait(0.01)
-	    local targetChar = players:FindFirstChild(target) and players:FindFirstChild(target).Character
-	    if char and targetChar then
-	        local root = char:FindFirstChild("HumanoidRootPart")
-	        local head = char.Head
-	        local troot = targetChar:FindFirstChild("HumanoidRootPart")
-	        if root and troot then
-	        	local tpos = troot.Position
-	        	if getDistance(tpos, root.Position) > 40 then newtp(tpos) end
-	            angle = angle + (dt * speed)
-	            local x = math.cos(angle) * radius
-	            local z = math.sin(angle) * radius
-	            local newPos = tpos + Vector3.new(x, 4, z)
-	            local screenpos = cam:WorldToScreenPoint(tpos)
-	            root.CFrame = CFrame.lookAt(newPos, tpos)
-	            local backOffset = 10 
+	    local dt = task.wait(0.001)
+	    local target = textcheck()
+	    if target and target ~= lasttarget then
+			local player = players:FindFirstChild(target)
+			if player then
+				ctarget = player
+				lasttarget = target
+				print("target found: " .. target)
+			end
+		end
+		if ctarget and ctarget.Character then
+		    local tchar = ctarget.Character
+		    if char and tchar then
+		        local root = char:FindFirstChild("HumanoidRootPart")
+		        local head = char.Head
+		        local troot = tchar:FindFirstChild("HumanoidRootPart")
+		        if root and troot then
+					local tpos = troot.Position
+		        	if getDistance(tpos, root.Position) > 40 then newtp(tpos) end
+		            angle = angle + (dt * speed)
+		            local x = math.cos(angle) * radius
+		            local z = math.sin(angle) * radius
+		            local newPos = tpos + Vector3.new(x, 4, z)
+		            local screenpos = cam:WorldToScreenPoint(tpos)
+		            root.CFrame = CFrame.lookAt(newPos, tpos)
+		            local backOffset = 10 
 					local upOffset = 3
 					local camPos = root.CFrame.Position + (root.CFrame.LookVector * -backOffset) + (root.CFrame.UpVector * upOffset)
 					cam.CFrame = CFrame.lookAt(camPos, troot.Position)
-	        end
-	    end
+					if not killing then
+						killing = true
+						task.spawn(function()
+							kill(lasttarget)
+							killing = false
+						end)
+					end
+
+		        end
+		    else 
+				ctarget = nil
+				lasttarget = ""
+			end
+		end
 	end
 end)
