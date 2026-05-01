@@ -72,6 +72,7 @@ local function newtp(target)
 	keypress(0x31)
 	task.wait(0.3)
 	keyrelease(0x31)
+	tping = false
 end
 local function textcheck()
     local target = nil
@@ -151,26 +152,27 @@ task.spawn(function()
 		        local troot = tchar:FindFirstChild("HumanoidRootPart")
 		        if root and troot then
 					local tpos = troot.Position
-		        	if getDistance(tpos, root.Position) > 15 then 
+		        	if getDistance(tpos, root.Position) > 40 then 
 						newtp(tpos) 
+					else
+						angle = angle + (dt * speed)
+						local x = math.cos(angle) * radius
+						local z = math.sin(angle) * radius
+						local newPos = tpos + Vector3.new(x, 4, z)
+						local screenpos = cam:WorldToScreenPoint(tpos)
+						root.CFrame = CFrame.lookAt(newPos, tpos)
+						local backOffset = 10 
+						local upOffset = 3
+						local camPos = root.CFrame.Position + (root.CFrame.LookVector * -backOffset) + (root.CFrame.UpVector * upOffset)
+						cam.CFrame = CFrame.lookAt(camPos, troot.Position)
+						if not killing then
+							killing = true
+							task.spawn(function()
+								kill(lasttarget)
+								killing = false
+							end)
+						end	
 					end
-					angle = angle + (dt * speed)
-					local x = math.cos(angle) * radius
-					local z = math.sin(angle) * radius
-					local newPos = tpos + Vector3.new(x, 4, z)
-					local screenpos = cam:WorldToScreenPoint(tpos)
-					root.CFrame = CFrame.lookAt(newPos, tpos)
-					local backOffset = 10 
-					local upOffset = 3
-					local camPos = root.CFrame.Position + (root.CFrame.LookVector * -backOffset) + (root.CFrame.UpVector * upOffset)
-					cam.CFrame = CFrame.lookAt(camPos, troot.Position)
-					if not killing then
-						killing = true
-						task.spawn(function()
-							kill(lasttarget)
-							killing = false
-						end)
-					end	
 		        end
 		    else 
 				ctarget = nil
