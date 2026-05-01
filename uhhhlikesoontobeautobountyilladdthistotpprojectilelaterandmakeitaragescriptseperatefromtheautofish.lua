@@ -153,25 +153,24 @@ task.spawn(function()
 					local tpos = troot.Position
 		        	if getDistance(tpos, root.Position) > 15 then 
 						newtp(tpos) 
-					else
-						angle = angle + (dt * speed)
-			            local x = math.cos(angle) * radius
-			            local z = math.sin(angle) * radius
-			            local newPos = tpos + Vector3.new(x, 4, z)
-			            local screenpos = cam:WorldToScreenPoint(tpos)
-			            root.CFrame = CFrame.lookAt(newPos, tpos)
-			            local backOffset = 10 
-						local upOffset = 3
-						local camPos = root.CFrame.Position + (root.CFrame.LookVector * -backOffset) + (root.CFrame.UpVector * upOffset)
-						cam.CFrame = CFrame.lookAt(camPos, troot.Position)
-						if not killing then
-							killing = true
-							task.spawn(function()
-								kill(lasttarget)
-								killing = false
-							end)
-						end	
 					end
+					angle = angle + (dt * speed)
+					local x = math.cos(angle) * radius
+					local z = math.sin(angle) * radius
+					local newPos = tpos + Vector3.new(x, 4, z)
+					local screenpos = cam:WorldToScreenPoint(tpos)
+					root.CFrame = CFrame.lookAt(newPos, tpos)
+					local backOffset = 10 
+					local upOffset = 3
+					local camPos = root.CFrame.Position + (root.CFrame.LookVector * -backOffset) + (root.CFrame.UpVector * upOffset)
+					cam.CFrame = CFrame.lookAt(camPos, troot.Position)
+					if not killing then
+						killing = true
+						task.spawn(function()
+							kill(lasttarget)
+							killing = false
+						end)
+					end	
 		        end
 		    else 
 				ctarget = nil
